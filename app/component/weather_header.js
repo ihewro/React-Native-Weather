@@ -5,6 +5,7 @@
 import React, {Component} from 'react'
 
 import {StyleSheet, View, Text, Image, StatusBar} from 'react-native';
+import AppStyle from '../styles/index';
 
 
 export default class WeatherHeader extends Component{
@@ -25,8 +26,8 @@ export default class WeatherHeader extends Component{
             <View style={styles.contentContainer}>
                 <Text style={styles.number}>-23° </Text>
                 <View style={styles.details}>
-                    <Text style={styles.smallNumber}>多云</Text>
-                    <Text style={styles.smallNumber}>体感温度 -30°</Text>
+                    <Text style={AppStyle.smallNumber}>多云</Text>
+                    <Text style={AppStyle.smallNumber}>体感温度 -30°</Text>
                 </View>
             </View>
         );
@@ -48,9 +49,5 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-    },
-    smallNumber: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 12
     },
 });

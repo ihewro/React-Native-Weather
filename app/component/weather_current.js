@@ -6,13 +6,14 @@ import React,{Component} from 'react'
 import {StyleSheet, View, Text, Image,FlatList} from 'react-native';
 import Divider from '../component/divider'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import AppStyle from '../styles/index';
 
 export default class WeatherCurrent extends Component{
 
     render () {
         return(
             <View >
-                <Text style={styles.smallNumber}>10分钟前更新</Text>
+                <Text style={AppStyle.smallNumber}>10分钟前更新</Text>
                 <Divider/>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
@@ -43,10 +44,7 @@ export default class WeatherCurrent extends Component{
 
 const styles = StyleSheet.create({
 
-    smallNumber: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 12
-    },
+
     futureItem: {
         flex: 1,
         marginRight: 30

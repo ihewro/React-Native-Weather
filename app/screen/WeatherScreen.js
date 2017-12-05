@@ -5,17 +5,33 @@
  */
 
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,TouchableOpacity,ImageBackground,StatusBar,ScrollView,RefreshControl} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableOpacity,ImageBackground,StatusBar,ScrollView,RefreshControl,NativeModules} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Divider from '../component/divider'
 
 import WeatherHeader from '../component/weather_header'
 import WeatherCurrent from '../component/weather_current'
-
 import WeatherFuture from '../component/weather_future'
-
+import AirCondition from '../component/air_condition'
+import LifeSuggestion from '../component/lift_suggestion'
+import WeatherFooter from '../component/weather_footer'
 
 export class WeatherScreen extends Component {
+
+    onMenuPressed = (labels) => {
+        const { onPress } = this.props;
+
+        UIManager.showPopupMenu(
+            findNodeHandle(this.menu),
+            labels,
+            () => {},
+            (result, index) => {
+                if (onPress) {
+                    onPress({ action: 'menu', result, index });
+                }
+            },
+        );
+    };
 
     static navigationOptions = {
         title: '北京',
@@ -29,9 +45,10 @@ export class WeatherScreen extends Component {
         },
         headerTintColor: '#fff',
         headerMode: 'none',
-        headerRight: ( <Icon name='more-vert' color={'#ffffff'} size={24} style={{marginRight:10,marginBottom: 5}}></Icon> ),
+        headerRight: ( <Icon name='more-vert' color={'#ffffff'} size={24} style={{marginRight:10,marginBottom: 5}} onPress={() => {}}></Icon> ),
         headerTitleStyle: {fontWeight: 'normal'}
     };
+
 
     constructor(props) {
         super(props);
@@ -69,7 +86,6 @@ export class WeatherScreen extends Component {
                 <Image style={styles.bgImage} source={require('../assets/bg.png')}/>
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
-
                     <ScrollView
                         style={styles.scrollViewContainer}
                         scrollEventThrottle={200}
@@ -78,6 +94,9 @@ export class WeatherScreen extends Component {
                         <WeatherHeader/>
                         <WeatherCurrent/>
                         <WeatherFuture/>
+                        <AirCondition/>
+                        <LifeSuggestion/>
+                        <WeatherFooter/>
                     </ScrollView>
                 </View>
 

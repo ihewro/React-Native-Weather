@@ -18,7 +18,11 @@ export default class Divider extends Component{
 
     render() {
         let dividerHeight = this.props.dividerHeight;
-        let backgroundColorValue = this.props.backgroundColor;
+        let backgroundColorValue = this.props.backgroundColorValue;
+        let marginLeftValue = this.props.marginLeftValue;
+        let marginRightValue = this.props.marginRightValuel;
+        let marginTopValue = this.props.marginTopValue;
+        let heightValue =  this.props.heightValue;
 
         if (dividerHeight == null){
             dividerHeight = 1;
@@ -26,17 +30,21 @@ export default class Divider extends Component{
         if (backgroundColorValue == null){
             backgroundColorValue = 'rgba(255,255,255,0.2)';
         }
+        if (marginLeftValue == null){
+            marginLeftValue = 0;
+        }
+        if (marginRightValue == null){
+            marginRightValue = 0;
+        }
+        if (marginTopValue == null){
+            marginTopValue = 0;
+        }
+        if (heightValue == null){
+            heightValue = 1;
+        }
         return (
-            <View style={{height:dividerHeight,backgroundColor: backgroundColorValue}}>
+            <View style={{height:dividerHeight,backgroundColor: backgroundColorValue,marginLeft: marginLeftValue,marginRight: marginRightValue, marginTop: marginTopValue,height: heightValue}}>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        height:1,
-        backgroundColor: 'rgba(255,255,255,0.2)'
-    }
-});
