@@ -9,29 +9,21 @@ import {StyleSheet,Text,View,Image,TouchableOpacity,ImageBackground,StatusBar,Sc
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Divider from '../component/divider'
 
+import DrawerLayout from 'react-native-drawer-layout';
+
+
+import NavigationHeader from '../component/header_navigation'
+import Menu from '../component/drawer_content'
 import WeatherHeader from '../component/weather_header'
 import WeatherCurrent from '../component/weather_current'
 import WeatherFuture from '../component/weather_future'
 import AirCondition from '../component/air_condition'
-import LifeSuggestion from '../component/lift_suggestion'
+import LifeSuggestion from '../component/life_suggestion'
 import WeatherFooter from '../component/weather_footer'
 
 export class WeatherScreen extends Component {
 
-    onMenuPressed = (labels) => {
-        const { onPress } = this.props;
 
-        UIManager.showPopupMenu(
-            findNodeHandle(this.menu),
-            labels,
-            () => {},
-            (result, index) => {
-                if (onPress) {
-                    onPress({ action: 'menu', result, index });
-                }
-            },
-        );
-    };
 
     static navigationOptions = {
         title: '北京',
@@ -40,20 +32,20 @@ export class WeatherScreen extends Component {
             position: 'absolute',
             height: 50,
             top: 20,
-            left: 0,
+            left: 20,
             right: 0,
         },
         headerTintColor: '#fff',
         headerMode: 'none',
-        headerRight: ( <Icon name='more-vert' color={'#ffffff'} size={24} style={{marginRight:10,marginBottom: 5}} onPress={() => {}}></Icon> ),
-        headerTitleStyle: {fontWeight: 'normal'}
+        headerTitleStyle: {fontWeight: 'normal'},
+        header: null
     };
+
 
 
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
 
         this.state = {
             isOpen: false,
@@ -61,46 +53,62 @@ export class WeatherScreen extends Component {
         };
     }
 
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen,
-        });
+
+    //关闭侧边栏
+    _closeControlPanel = () => {
+        this.refs.drawer.closeDrawer();
+    };
+    //开启侧边栏
+    _openControlPanel = () => {
+        this.refs.drawer.openDrawer();
+    }
+    _closeDrawer = () => {
+        alert('hello')
     }
 
-    updateMenuState(isOpen) {
-        this.setState({ isOpen });
-    }
-
-    onMenuItemSelected = item =>
-        this.setState({
-            isOpen: false,
-            selectedItem: item,
-        });
     _refreshWeatherData = () => {
         //weatherStore.requestWeatherByName(weatherStore.currentCityName);
     };
-    render() {
-        //const {navigate} = this.props.navigation;
-        return (
-            <View style={styles.transparentBackground}>
-                <Image style={styles.bgImage} source={require('../assets/bg.png')}/>
-                <View style={styles.container}>
-                    <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
-                    <ScrollView
-                        style={styles.scrollViewContainer}
-                        scrollEventThrottle={200}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <WeatherHeader/>
-                        <WeatherCurrent/>
-                        <WeatherFuture/>
-                        <AirCondition/>
-                        <LifeSuggestion/>
-                        <WeatherFooter/>
-                    </ScrollView>
-                </View>
 
-            </View>
+
+    render() {
+        var navigation = this.props.navigation;
+
+        return (
+            <DrawerLayout
+                drawerWidth={320}
+                ref="drawer"
+                drawerPosition={DrawerLayout.positions.Left}
+                renderNavigationView={()=><Menu callback={this._closeDrawer} navigation={navigation} />}>
+                <View style={styles.transparentBackground}>
+                    <Image style={styles.bgImage} source={require('../assets/bg.png')}/>
+                    <View style={styles.headerTop}>
+                        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
+                        <View style={styles.contentContainer}>
+                            <TouchableOpacity onPress={this._openControlPanel}>
+                                <Icon name='menu' color={'white'} size={20} style={{backgroundColor:'transparent'}}></Icon>
+                            </TouchableOpacity>
+                            <View style={styles.cityContainer}>
+                                <Text style={styles.title}>北京</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.container}>
+                        <ScrollView
+                            style={styles.scrollViewContainer}
+                            scrollEventThrottle={200}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <WeatherHeader/>
+                            <WeatherCurrent/>
+                            <WeatherFuture/>
+                            <AirCondition/>
+                            <LifeSuggestion/>
+                            <WeatherFooter/>
+                        </ScrollView>
+                    </View>
+                </View>
+            </DrawerLayout>
         );
     }
 }
@@ -130,5 +138,30 @@ const styles = StyleSheet.create({
         position: 'absolute',//相对父元素进行绝对定位
         top: 200,
         bottom:0
+    },
+    contentContainer:{
+        flex: 1,
+        flexDirection: 'row',
+    },
+    headerTop: {
+        position: 'absolute',//相对父元素进行绝对定位
+        top: 40,
+        left:20,
+        bottom:0,
+        height:50
+    },
+
+    title: {
+        fontSize: 18,
+        color: 'white',
+        backgroundColor: 'transparent'
+    },
+
+    cityContainer:{
+        flexDirection:'row',
+        justifyContent:'flex-end',
+        marginLeft:20,
+        marginTop: -2
     }
 });
+
