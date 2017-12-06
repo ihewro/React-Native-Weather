@@ -18,9 +18,16 @@ import AirCondition from '../component/air_condition'
 import LifeSuggestion from '../component/life_suggestion'
 import WeatherFooter from '../component/weather_footer'
 import weatherStore from '../storage/weather_store'
+import stateStore from '../storage/state_store'
+import {observer} from 'mobx-react/native'
 
+
+/**
+ * 被观察者，主要是当是否加载的属性变化的时候，刷新视图要相应的变化
+ */
+@observer
 export class WeatherScreen extends Component {
-    //
+    //导航栏的属性
     static navigationOptions = {
         title: '北京',
         /*headerStyle: {
@@ -47,6 +54,11 @@ export class WeatherScreen extends Component {
         };
     }
 
+    componentWillMount(){
+        this._refreshWeatherData();
+        stateStore.loadLocalCityData();
+    }
+
 
     //关闭侧边栏
     _closeControlPanel = () => {
@@ -55,19 +67,20 @@ export class WeatherScreen extends Component {
     //开启侧边栏
     _openControlPanel = () => {
         this.refs.drawer.openDrawer();
-    }
+    };
     _closeDrawer = () => {
         alert('hello')
-    }
+    };
 
     _refreshWeatherData = () => {
-        //weatherStore.requestWeatherByName(weatherStore.currentCityName);
+
+        weatherStore.requestWeatherByName(weatherStore.currentCityName);
     };
 
 
     render() {
-        var navigation = this.props.navigation;
-
+        let navigation = this.props.navigation;
+        let weatherData=weatherStore.getCurrentCityWeather();
         return (
             <DrawerLayout
                 drawerWidth={330}
@@ -83,30 +96,29 @@ export class WeatherScreen extends Component {
                                 <Icon name='menu' color={'white'} size={20} style={{backgroundColor:'transparent'}}></Icon>
                             </TouchableOpacity>
                             <View style={styles.cityContainer}>
-                                <Text style={styles.title}>北京</Text>
+                                <Text style={styles.title}>{weatherData === null ? '未知' : weatherData.basic.city}</Text>
                             </View>
                         </View>
                     </View>
                     <View style={styles.container}>
                         <ScrollView
                             style={styles.scrollViewContainer}
-                            scrollEventThrottle={200}
                             showsVerticalScrollIndicator={false}
                             refreshControl={
                                 <RefreshControl
                                     refreshing={weatherStore.loading}
                                     onRefresh={this._refreshWeatherData}
                                     tintColor={'white'}
-                                    titleColor={'white'}
-                                    title={weatherStore.loading?"刷新中...":'下拉刷新'}/>}>
-                            }
-                        >
-                            <WeatherHeader/>
-                            <WeatherCurrent/>
-                            <WeatherFuture/>
-                            <AirCondition/>
-                            <LifeSuggestion/>
-                            <WeatherFooter/>
+                                    titleColor={'white'}/>}>
+                            <View style={{marginLeft: 10}}>
+                                <WeatherHeader/>
+                                <WeatherCurrent/>
+                                <WeatherFuture/>
+                                <AirCondition/>
+                                <LifeSuggestion/>
+                                <WeatherFooter/>
+                            </View>
+
                         </ScrollView>
                     </View>
                 </View>
@@ -134,7 +146,8 @@ const styles = StyleSheet.create({
     },
     scrollViewContainer:{
         paddingLeft:10,
-        paddingRight:10
+        paddingRight:10,
+
     },
     container: {
         position: 'absolute',//相对父元素进行绝对定位

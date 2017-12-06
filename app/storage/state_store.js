@@ -61,10 +61,11 @@ class StateStore {
      * 加载本地添加的天气列表数据
      */
     loadLocalCityData() {
+        console.log("开启加载本地存储的数据…………………………");
         storage.load({
             key: 'cities',
             // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的sync方法
-            autoSync: true,
+            autoSync: false,
             // syncInBackground(默认为true)意味着如果数据过期，
             // 在调用sync方法的同时先返回已经过期的数据。
             // 设置为false的话，则始终强制返回sync方法提供的最新数据(当然会需要更多等待时间)。
@@ -76,12 +77,15 @@ class StateStore {
             // 而不能在then以外处理
             // 也没有办法“变成”同步返回
             // 你也可以使用“看似”同步的async/await语法
+            console.log("本地存储的数据：" + ret);
             let array = JSON.parse(ret);
             for (let i = 0; i < array.length; i++) {
                 this.cityList.push(array[i]);
             }
             this.cityList = this.removeDuplicatedItem(this.cityList);
+            console.log("城市列表" + this.cityList);
         }).catch(err => {
+            console.log("如果没有找到数据且没有sync方法");
             //如果没有找到数据且没有sync方法，
             //或者有其他异常，则在catch中返回
             console.warn(err.message);
@@ -96,6 +100,7 @@ class StateStore {
                     break;
             }
         });
+        console.log("本地存储的天气信息加载完成…………………………");
     }
 
     /**

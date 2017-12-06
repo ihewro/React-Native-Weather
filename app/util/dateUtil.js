@@ -1,4 +1,3 @@
-'use strict';
 
 /**
  * 根据日期获取星期
@@ -70,7 +69,9 @@ function getMonthAndDayByDate(date) {
  * @param date
  */
 function getHoursAndMinsByDate(date) {
-    return date.substring(11,date.length);
+
+    console.log("长度为" + String(date).length);
+    return String(date).substring(10,String(date).length);
 }
 
 

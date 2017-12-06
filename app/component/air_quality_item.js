@@ -4,7 +4,7 @@
 
 
 import React,{Component} from 'react'
-import {StyleSheet, View, Text, Image, StatusBar, ScrollView, RefreshControl, DrawerLayoutAndroid,ImageBackground} from 'react-native';
+import {StyleSheet, View, Text, Image, StatusBar, ScrollView, RefreshControl, DrawerLayoutAndroid,ImageBackground,ActivityIndicator} from 'react-native';
 
 import weatherStore from '../storage/weather_store'
 import Divider from  '../component/divider'
@@ -44,7 +44,11 @@ export default class AirQualityItem extends Component{
 
     //输出正在加载的界面
     _renderLoading= () =>{
-
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator></ActivityIndicator>
+            </View>
+        );
     }
 }
 
