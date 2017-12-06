@@ -1,5 +1,5 @@
 /**
- * @name Simple Weather
+ * @name Simple Weather 简天气
  * @description
  * @author 何炜 陈弘扬
  */
@@ -8,10 +8,7 @@ import React, { Component } from 'react';
 import {StyleSheet,Text,View,Image,TouchableOpacity,ImageBackground,StatusBar,ScrollView,RefreshControl,NativeModules} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Divider from '../component/divider'
-
 import DrawerLayout from 'react-native-drawer-layout';
-
-
 import NavigationHeader from '../component/header_navigation'
 import Menu from '../component/drawer_content'
 import WeatherHeader from '../component/weather_header'
@@ -20,14 +17,13 @@ import WeatherFuture from '../component/weather_future'
 import AirCondition from '../component/air_condition'
 import LifeSuggestion from '../component/life_suggestion'
 import WeatherFooter from '../component/weather_footer'
+import weatherStore from '../storage/weather_store'
 
 export class WeatherScreen extends Component {
-
-
-
+    //
     static navigationOptions = {
         title: '北京',
-        headerStyle: {
+        /*headerStyle: {
             backgroundColor: 'transparent',
             position: 'absolute',
             height: 50,
@@ -37,16 +33,14 @@ export class WeatherScreen extends Component {
         },
         headerTintColor: '#fff',
         headerMode: 'none',
-        headerTitleStyle: {fontWeight: 'normal'},
+        headerTitleStyle: {fontWeight: 'normal'},*/
+
         header: null
     };
 
 
-
     constructor(props) {
         super(props);
-
-
         this.state = {
             isOpen: false,
             selectedItem: 'About',
@@ -76,7 +70,7 @@ export class WeatherScreen extends Component {
 
         return (
             <DrawerLayout
-                drawerWidth={320}
+                drawerWidth={330}
                 ref="drawer"
                 drawerPosition={DrawerLayout.positions.Left}
                 renderNavigationView={()=><Menu callback={this._closeDrawer} navigation={navigation} />}>
@@ -98,6 +92,14 @@ export class WeatherScreen extends Component {
                             style={styles.scrollViewContainer}
                             scrollEventThrottle={200}
                             showsVerticalScrollIndicator={false}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={weatherStore.loading}
+                                    onRefresh={this._refreshWeatherData}
+                                    tintColor={'white'}
+                                    titleColor={'white'}
+                                    title={weatherStore.loading?"刷新中...":'下拉刷新'}/>}>
+                            }
                         >
                             <WeatherHeader/>
                             <WeatherCurrent/>
