@@ -7,6 +7,9 @@ import Divider from "./divider";
 import AppStyle from '../styles/index';
 import weatherStore from '../storage/weather_store'
 import AirQualityItem from '../component/air_quality_item'
+import {observer} from 'mobx-react/native'
+
+@observer
 export default class AirCondition extends Component {
 
     //构造函数
@@ -36,13 +39,14 @@ export default class AirCondition extends Component {
     }
 
     render(){
-        /*if (!weatherStore.loading) {
+
+        let marginLeftValue = 50;
+        if (!weatherStore.loading) {
             let weatherData = weatherStore.getCurrentCityWeather();
-            if (weatherData != null) {
+            if (weatherData !== null) {
                 marginLeftValue = weatherData.aqi.city.aqi;
             }
-        }*/
-        let marginLeftValue = 50;
+        }
         let offset = marginLeftValue;
         if (offset > 330)
             offset = 330;

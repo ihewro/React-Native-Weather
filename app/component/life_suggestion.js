@@ -8,6 +8,9 @@ import AppStyle from '../styles/index';
 import SuggestionItem from '../component/suggestion_item'
 import Divider from "./divider";
 
+import {observer} from 'mobx-react/native'
+
+@observer
 export default class LifeSuggestion extends Component{
 
     //构造函数

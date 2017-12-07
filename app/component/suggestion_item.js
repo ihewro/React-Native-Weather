@@ -6,7 +6,10 @@ import React,{Component} from 'react'
 import {StyleSheet, View, Text, Image, StatusBar, ScrollView, RefreshControl, DrawerLayoutAndroid,ImageBackground} from 'react-native';
 import Divider from "./divider";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import {observer} from 'mobx-react/native'
+import weatherStore from "../storage/weather_store";
 
+@observer
 export default class SuggestionItem extends Component{
 
     //构造函数
@@ -16,7 +19,34 @@ export default class SuggestionItem extends Component{
         this.state = {};
     }
 
-    render() {
+    render(){
+        let lifeList = weatherStore.lifeList;
+        if (lifeList.length !== 7){
+            return this._renderLoadingView()
+        }else{
+            return this._renderContent();
+        }
+    }
+
+
+    _renderContent = () => {
+        let lifeList = weatherStore.lifeList;
+        console.log("生活指数" + JSON.stringify(lifeList));
+        let index = this.props.index;
+        return (
+            <View style={styles.container}>
+                <Icon name={'pill'} size={40} color={'#ffffff'} />
+                <View style={styles.contentContainer}>
+                    <Text style={styles.text}>{lifeList[index].type}:{lifeList[index].brf}</Text>
+                    <Text style={[styles.text, styles.textBottom]}>{lifeList[index].txt}</Text>
+                </View>
+                <Divider marginLeftValue={20} marginRightValue={20} marginTopValue={5}/>
+            </View>
+        )
+    };
+
+    _renderLoadingView =() => {
+
         return (
             <View style={styles.container}>
                 <Icon name={'pill'} size={40} color={'#ffffff'} />

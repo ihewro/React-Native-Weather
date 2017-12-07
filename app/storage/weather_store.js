@@ -16,10 +16,8 @@ class WeatherStore{
     @observable currentCityName = '北京';//当前的天气名称
     @observable aqiList = [];//空气指数/质量
     @observable lifeList = [];//生活指数/建议
-    @observable loading = false;//指示数据是否正在加载
+    @observable loading = true;//指示数据是否正在加载
 
-    //???
-    ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
     /**
      * 改变当前城市名，获取城市天气的数据，必须先判断本地是否已经存储了数据。
@@ -41,8 +39,8 @@ class WeatherStore{
      * @param name
      */
     requestWeatherByName(name){
+        console.log("开启网络请求天气数据");
         this.loading = true;
-        console.log("当前的是否正在加载" + this.loading);
         return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=beijing")
             .then((response) => {//数据解析方式
                 if (response.ok){
@@ -57,11 +55,10 @@ class WeatherStore{
                 this.saveWeatherData(jsonData);
                 //加载完成
                 this.loading = false;
-                console.log("获取天气成功");
-                //console.log("天气数据"+ JSON.stringify(jsonData));
+                console.log("获取天气成功，结束当前网络请求天气数据");
             })
             .catch((error) => {//错误信息处理
-                console.log("获取天气数据失败" + error);
+                console.log("获取天气数据失败，结束当前网络请求天气数据" + error);
             })
             .done();
     };
@@ -71,7 +68,9 @@ class WeatherStore{
      * @param jsonData
      */
     saveWeatherData = (jsonData) => {
+
         let weatherData = jsonData.HeWeather5[0];
+
         this.weatherMap.set(weatherData.basic.city, new WeatherModel(weatherData));//键值对：城市——>天气信息
 
         //获取空气指数信息
@@ -112,17 +111,17 @@ class WeatherStore{
     convertSuggestionList = (weatherData) => {
         this.lifeList = [];
         let suggestion = weatherData.suggestion;
-        this.lifeList.push(new SuggestionInfo('舒适指数', suggestion.comf.brf, suggestion.comf.txt));
-        this.lifeList.push(new SuggestionInfo('洗车指数', suggestion.cw.brf, suggestion.cw.txt));
-        this.lifeList.push(new SuggestionInfo('穿衣指数', suggestion.drsg.brf, suggestion.drsg.txt));
-        this.lifeList.push(new SuggestionInfo('感冒指数', suggestion.flu.brf, suggestion.flu.txt));
-        this.lifeList.push(new SuggestionInfo('运动指数', suggestion.sport.brf, suggestion.sport.txt));
-        this.lifeList.push(new SuggestionInfo('旅游指数', suggestion.trav.brf, suggestion.trav.txt));
-        this.lifeList.push(new SuggestionInfo('紫外线指数', suggestion.uv.brf, suggestion.uv.txt));
+        this.lifeList.push(new SuggestionInfo('舒适指数', Object(suggestion.comf).brf, Object(suggestion.comf).txt));
+        this.lifeList.push(new SuggestionInfo('洗车指数', Object(suggestion.cw).brf, Object(suggestion.cw).txt));
+        this.lifeList.push(new SuggestionInfo('穿衣指数', Object(suggestion.drsg).brf, Object(suggestion.drsg).txt));
+        this.lifeList.push(new SuggestionInfo('感冒指数', Object(suggestion.flu).brf, Object(suggestion.flu).txt));
+        this.lifeList.push(new SuggestionInfo('运动指数', Object(suggestion.sport).brf, Object(suggestion.sport).txt));
+        this.lifeList.push(new SuggestionInfo('旅游指数', Object(suggestion.trav).brf, Object(suggestion.trav).txt));
+        this.lifeList.push(new SuggestionInfo('紫外线指数', Object(suggestion.uv).brf, Object(suggestion.uv).txt));
     };
 
     /**
-     * 存储天气数据
+     * 存储一个城市的天气数据
      * @param weatherData
      */
     saveCityItem(weatherData) {
@@ -142,6 +141,7 @@ class WeatherStore{
         } else {
             stateStore.cityList.push(weatherItem);
         }
+        //把当前的cityList 存储到localStorage
         stateStore.saveLocalCityData();
     }
 
@@ -189,6 +189,7 @@ class WeatherStore{
     @computed get hourlyDataSource() {
         let data = this.getCurrentCityWeather();
         if (data !== null) {
+
             let hourlyData = data.hourly;
 
             console.log("获取到了当日24小时的天气" +JSON.stringify(hourlyData));

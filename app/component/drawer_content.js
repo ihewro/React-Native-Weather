@@ -13,6 +13,8 @@ import AppStyle from '../styles/index'
 import Swipeout from 'react-native-swipeout'
 import Divider from '../component/divider'
 
+
+@observer
 export default class Menu extends Component {
     // 构造函数
     constructor(props) {

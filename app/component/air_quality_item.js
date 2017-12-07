@@ -5,11 +5,12 @@
 
 import React,{Component} from 'react'
 import {StyleSheet, View, Text, Image, StatusBar, ScrollView, RefreshControl, DrawerLayoutAndroid,ImageBackground,ActivityIndicator} from 'react-native';
-
+import {observer} from 'mobx-react/native'
 import weatherStore from '../storage/weather_store'
 import Divider from  '../component/divider'
-export default class AirQualityItem extends Component{
 
+@observer
+export default class AirQualityItem extends Component{
     //构造函数
     constructor(props) {
         super(props);
@@ -18,23 +19,26 @@ export default class AirQualityItem extends Component{
     }
 
     render(){
-        if (weatherStore.loading) {
+        let aqiList = weatherStore.aqiList;
+        if (aqiList.length !== 6) {
             return this._renderLoading();
         }else {
-            return this._renderContent();
+            return this._renderContent(aqiList);
         }
     }
 
-    _renderContent = () => {
+    _renderContent = (aqiList) => {
+        let index = this.props.index;
+        console.log("空气指数的值为" + JSON.stringify(aqiList[index]));
         return (
             <View style={styles.container}>
                 <View style={styles.columnItem}>
-                    <Text style={styles.textTop}>CO</Text>
-                    <Text style={styles.textTop}>0.6</Text>
+                    <Text style={styles.textTop}>{aqiList[index].eng_name}</Text>
+                    <Text style={styles.textTop}>{aqiList[index].value}</Text>
                 </View>
                 <View style={styles.columnItem}>
-                    <Text style={styles.textBottom}>一氧化碳</Text>
-                    <Text style={styles.textBottom}>mg/m³</Text>
+                    <Text style={styles.textBottom}>{aqiList[index].chn_name}</Text>
+                    <Text style={styles.textBottom}>{aqiList[index].unit}</Text>
                 </View>
                     <Divider marginLeftValue={10} marginRightValue={10} marginTopValue={5} backgroundColorValue={'rgba(255,255,255,0.1)'}/>
             </View>

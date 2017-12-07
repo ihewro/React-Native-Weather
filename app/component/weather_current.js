@@ -21,11 +21,12 @@ export default class WeatherCurrent extends Component{
         if (weatherStore.loading){
             return this._renderLoadingView();
         }else {
-            return this._renderContent();
+            console.log("当前天气的分小时数据：" +JSON.stringify(weatherStore.hourlyDataSource));
+            return this._renderContent(weatherStore.hourlyDataSource);
         }
     }
 
-    _renderContent = () => {
+    _renderContent = (dataSource) => {
         return(
             <View >
                 <Text style={AppStyle.smallNumber}>10分钟前更新</Text>
@@ -33,7 +34,7 @@ export default class WeatherCurrent extends Component{
                 <FlatList
                     keyExtractor={this._keyExtractor}
                     showsHorizontalScrollIndicator={false}
-                    data={weatherStore.hourlyDataSource}
+                    data={dataSource}
                     extraData={this.state}
                     renderItem={this._renderItem}
                     horizontal = {true}

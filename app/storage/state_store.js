@@ -21,13 +21,6 @@ class StateStore {
 
     }
 
-    /**
-     * 更新ListView数据
-     * @returns {ListViewDataSource.ListViewDataSource}
-     */
-    @computed get cityDataSource() {
-        return this.ds.cloneWithRows(this.cityList.slice());
-    }
 
     /**
      * 移除本地已经添加的某个城市
@@ -49,6 +42,8 @@ class StateStore {
 
     /**
      * 保存到本地的天气列表
+     *
+     * [{"cityName":"北京","tmp":"-5~6°C","iconUrl":"https://cdn.heweather.com/cond_icon/101.png"}]
      */
     saveLocalCityData() {
         storage.save({
