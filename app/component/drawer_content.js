@@ -4,7 +4,7 @@
 
 
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback,TouchableOpacity, FlatList,ImageBackground} from 'react-native';
+import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback,TouchableOpacity, FlatList,ImageBackground,ListView} from 'react-native';
 import {observer} from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import Icon2 from 'react-native-vector-icons/Ionicons'
@@ -13,6 +13,9 @@ import AppStyle from '../styles/index'
 import Swipeout from 'react-native-swipeout'
 import Divider from '../component/divider'
 import Picker from 'react-native-picker';
+import CITY from '../util/cityData'
+import stateStore from '../storage/state_store'
+import weatherStore from "../storage/weather_store";
 
 
 @observer
@@ -27,32 +30,64 @@ export default class Menu extends Component {
     //flatList的每一项的渲染
     _renderCityItem = (item) =>{
 
+        console.log("当前城市的数据（侧边栏）" + JSON.stringify(item));
+        // Buttons
+        var swipeOutBtn = [
+            {
+                text: '删除',
+                onPress: () => {
+                    stateStore.removeCityByName(item.cityName);
+                    alert("删除成功");
+                }
+            }
+        ];
+        let callback = this.props.callback;
         return(
-
-            <TouchableNativeFeedback>
-                <View style={styles.cityItem}>
-                    <View style={styles.cityItemName}>
-                        <Icon name={'location-pin'} size={15}/>
-                        <Text>昌平</Text>
+            <Swipeout left={swipeOutBtn}
+                      backgroundColor={'#ffffff'}
+                      autoClose={true}
+            >
+                <TouchableNativeFeedback
+                onPress={()=>{
+                    weatherStore.changeCurrentCityName(item.cityName);
+                    callback();
+                }}>
+                    <View style={styles.cityItem}>
+                        <View style={styles.cityItemName}>
+                            <Icon name={'location-pin'} size={15}/>
+                            <Text>{item.cityName}</Text>
+                        </View>
+                        <View style={styles.cityItemTemp}>
+                            <Text>{item.tmp}</Text>
+                            <Icon2 name={'ios-sunny'} size={20} color={'#ffda00'}/>
+                        </View>
                     </View>
-                    <View style={styles.cityItemTemp}>
-                        <Text>6°</Text>
-                        <Icon2 name={'ios-sunny'} size={20} color={'#ffda00'}/>
-                    </View>
-                </View>
-            </TouchableNativeFeedback>
+                </TouchableNativeFeedback>
+            </Swipeout>
         )
+    };
+
+
+    render(){
+        /*console.log("本地的城市列表数组大小" + stateStore.cityList.length );
+        for(let i =0; i< stateStore.cityList.length;i++){
+            console.log(JSON.stringify(stateStore.cityList[i]));
+        }*/
+        return this._renderCityList(stateStore.cityList);
+    }
+
+    _renderMenuTop = () => {
 
     };
 
-    render(){
-        return(
+    _renderCityList = (dataSource) => {
+        console.log("本地的城市列表数组大小" + dataSource.length );
+        return (
             <View style={styles.drawerContainer}>
                 <Image
                     style={styles.menuImage}
                     source={require('../assets/menu_bg.jpg')}
                 />
-
                 <Divider backgroundColorValue={'rgba(237,241,242,0.3)'}/>
                 <TouchableNativeFeedback
                     onPress={this._onPressAddCity}
@@ -64,10 +99,10 @@ export default class Menu extends Component {
                 </TouchableNativeFeedback>
                 <Divider backgroundColorValue={'rgba(237,241,242,0.6)'}/>
 
-                <FlatList
-                    data={[{key: 'a'}, {key: 'b'}]}
-                    renderItem={this._renderCityItem}
-                />
+                <ListView
+                    dataSource={stateStore.cityDataSource}
+                    renderRow={this._renderCityItem}>
+                </ListView>
                 <Divider backgroundColorValue={'rgba(237,241,242,0.3)'}/>
                 <ImageBackground style={styles.menuButton}>
 
@@ -103,19 +138,26 @@ export default class Menu extends Component {
 
             </View>
         )
+    };
+
+    _renderMenuBottom = () => {
+
     }
 
     _onPressAddCity = () =>{
-        let data = [];
-        for(var i=0;i<100;i++){
-            data.push(i);
-        }
+
 
         Picker.init({
-            pickerData: data,
-            selectedValue: [59],
-            onPickerConfirm: data => {
-                console.log(data);
+            pickerTitleText: '选择城市',
+            pickerCancelBtnText:'取消',
+            pickerConfirmBtnText: '确定',
+            pickerData: CITY,
+            selectedValue: ['北京市','北京市',1],
+            onPickerConfirm: (selectedValue) => {
+                //去掉最后一个字，比如县，比如区，以便能够查询天气
+                let cityName = selectedValue[2].substring(0,selectedValue[2].length - 1);
+                weatherStore.requestWeatherByName(cityName);
+                console.log(cityName);
             },
             onPickerCancel: data => {
                 console.log(data);

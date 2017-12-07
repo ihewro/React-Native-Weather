@@ -20,6 +20,7 @@ export default class WeatherFuture extends Component{
                 <Divider/>
                 <FlatList
                     data={weatherStore.dailyDataSource}
+                    extraData={this.state}
                     renderItem={this._renderItem}
                 />
             </View>

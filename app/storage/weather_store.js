@@ -41,7 +41,7 @@ class WeatherStore{
     requestWeatherByName(name){
         console.log("开启网络请求天气数据");
         this.loading = true;
-        return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=beijing")
+        return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=" + name)
             .then((response) => {//数据解析方式
                 if (response.ok){
                     return response.json();
@@ -138,8 +138,10 @@ class WeatherStore{
 
         if (flag !== -1) {
             stateStore.cityList[flag] = weatherItem;
+            console.log("当前天气已经存在天气列表中只需要修改天气数据即可");
         } else {
             stateStore.cityList.push(weatherItem);
+            console.log("当前已经存储的天气列表中没有改天气名称时候才会存储")
         }
         //把当前的cityList 存储到localStorage
         stateStore.saveLocalCityData();
@@ -198,6 +200,7 @@ class WeatherStore{
             return '[]';
         }
     }
+
 
 
 }

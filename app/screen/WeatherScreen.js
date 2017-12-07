@@ -69,9 +69,7 @@ export class WeatherScreen extends Component {
     _openControlPanel = () => {
         this.refs.drawer.openDrawer();
     };
-    _closeDrawer = () => {
-        alert('hello')
-    };
+
 
     _refreshWeatherData = () => {
         weatherStore.requestWeatherByName(weatherStore.currentCityName);
@@ -86,7 +84,7 @@ export class WeatherScreen extends Component {
                 drawerWidth={330}
                 ref="drawer"
                 drawerPosition={DrawerLayout.positions.Left}
-                renderNavigationView={()=><Menu callback={this._closeDrawer} navigation={navigation} />}>
+                renderNavigationView={()=><Menu callback={this._closeControlPanel} navigation={navigation} />}>
                 <View style={styles.transparentBackground}>
                     <Image style={styles.bgImage} source={require('../assets/bg.png')}/>
                     <View style={styles.headerTop}>

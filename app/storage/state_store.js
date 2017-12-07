@@ -46,10 +46,13 @@ class StateStore {
      * [{"cityName":"北京","tmp":"-5~6°C","iconUrl":"https://cdn.heweather.com/cond_icon/101.png"}]
      */
     saveLocalCityData() {
+        console.log("本地的CityList" + this.cityList.length);
+        console.log("开始存储本地数据……");
         storage.save({
             key: 'cities',
             data: JSON.stringify(this.cityList)
-        })
+        });
+        console.log("结束存储本地数据……");
     };
 
     /**
@@ -75,7 +78,16 @@ class StateStore {
             console.log("本地存储的数据：" + ret);
             let array = JSON.parse(ret);
             for (let i = 0; i < array.length; i++) {
-                this.cityList.push(array[i]);
+                let flag = true;//是否可以添加到城市列表中
+                for (let j =0;j<this.cityList.length;j++){
+                    if (array[i].cityName === this.cityList[j].cityName){
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag){
+                    this.cityList.push(array[i]);
+                }
             }
             this.cityList = this.removeDuplicatedItem(this.cityList);
             console.log("城市列表" + this.cityList);
@@ -86,11 +98,11 @@ class StateStore {
             console.warn(err.message);
             switch (err.name) {
                 case 'NotFoundError':
-                    alert('读取失败')
+                    alert('读取失败');
                     // TODO;
                     break;
                 case 'ExpiredError':
-                    alert('读取失败')
+                    alert('读取失败');
                     // TODO
                     break;
             }
@@ -114,6 +126,14 @@ class StateStore {
 
         return ret;
     }
+
+    /**
+     * 返回本地的cityList
+     */
+    @computed get cityDataSource() {
+        return this.ds.cloneWithRows(this.cityList.slice());
+    }
+
 }
 
 const stateStore = new StateStore();
