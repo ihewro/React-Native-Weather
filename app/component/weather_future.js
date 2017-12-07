@@ -9,7 +9,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import weatherStore from '../storage/weather_store'
 import dateUtil from '../util/dateUtil'
 import {observer} from 'mobx-react/native'
-
+import Config from '../config/index_config'
+import AppStyle from "../styles/index";
 
 @observer
 export default class WeatherFuture extends Component{
@@ -27,6 +28,7 @@ export default class WeatherFuture extends Component{
         )
     }
     _renderItem = ({item}) =>{
+        let iconUrl = Config.iconApi + Object(item.cond).code_d + '.png';
         return (
             <View style={styles.container}>
                 <View style={styles.textContainer}>
@@ -34,7 +36,7 @@ export default class WeatherFuture extends Component{
                     <Text style={[styles.text,{marginLeft:5}]}>{dateUtil.getWeekdayByDate(String(item.date))}</Text>
                 </View>
                 <View style={[styles.textContainer,{justifyContent:'center'}]}>
-                    <Icon name='wb-sunny' color={'#ffe603'} size={35}/>
+                    <Image style={AppStyle.weatherIcon} source={{uri: iconUrl}}/>
                     <Text style={[styles.text,{alignSelf:'center',marginLeft:5}]}>{Object(item.cond).txt_d}</Text>
                 </View>
                 <View style={[styles.textContainer,{justifyContent:'flex-end'}]}>

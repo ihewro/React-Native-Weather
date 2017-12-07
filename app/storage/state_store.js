@@ -98,11 +98,11 @@ class StateStore {
             console.warn(err.message);
             switch (err.name) {
                 case 'NotFoundError':
-                    alert('读取失败');
+                    alert('本地无缓存数据');
                     // TODO;
                     break;
                 case 'ExpiredError':
-                    alert('读取失败');
+                    alert('本地缓存数据已过期，重新为您加载');
                     // TODO
                     break;
             }

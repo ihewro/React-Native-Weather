@@ -7,6 +7,11 @@ const ApplicationStyles = {
         color: 'rgba(255,255,255,0.8)',
         fontSize: 12
     },
+    weatherIcon: {
+        width: 30,
+        height: 30,
+        tintColor: "#ffffff"
+    }
 }
 
 export default ApplicationStyles

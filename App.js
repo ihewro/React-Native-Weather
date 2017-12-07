@@ -7,11 +7,15 @@
 import { StackNavigator } from 'react-navigation';
 
 import {WeatherScreen} from './app/screen/WeatherScreen'
+import {SettingScreen} from "./app/screen/SettingScreen";
 
 const RootNavigator = StackNavigator({
     WeatherScreen: {
         screen: WeatherScreen,
     },
+    SettingScreen: {
+        screen: SettingScreen
+    }
 });
 
 export default RootNavigator;

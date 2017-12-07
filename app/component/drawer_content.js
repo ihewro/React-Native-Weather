@@ -4,7 +4,7 @@
 
 
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback,TouchableOpacity, FlatList,ImageBackground,ListView} from 'react-native';
+import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback, FlatList,ImageBackground,ListView} from 'react-native';
 import {observer} from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import Icon2 from 'react-native-vector-icons/Ionicons'
@@ -42,6 +42,8 @@ export default class Menu extends Component {
             }
         ];
         let callback = this.props.callback;
+        let iconUrl = item.iconUrl;
+
         return(
             <Swipeout left={swipeOutBtn}
                       backgroundColor={'#ffffff'}
@@ -54,12 +56,12 @@ export default class Menu extends Component {
                 }}>
                     <View style={styles.cityItem}>
                         <View style={styles.cityItemName}>
-                            <Icon name={'location-pin'} size={15}/>
+                            <Icon name={'location-pin'} size={0}/>
                             <Text>{item.cityName}</Text>
                         </View>
                         <View style={styles.cityItemTemp}>
                             <Text>{item.tmp}</Text>
-                            <Icon2 name={'ios-sunny'} size={20} color={'#ffda00'}/>
+                            <Image style={{tintColor:'#F8E6B5',width: 25,height: 25,marginLeft:5,alignItems:'center',marginBottom:3}} source={{uri: iconUrl}}/>
                         </View>
                     </View>
                 </TouchableNativeFeedback>
@@ -81,6 +83,7 @@ export default class Menu extends Component {
     };
 
     _renderCityList = (dataSource) => {
+        let navigation = this.props.navigation;
         console.log("本地的城市列表数组大小" + dataSource.length );
         return (
             <View style={styles.drawerContainer}>
@@ -106,8 +109,7 @@ export default class Menu extends Component {
                 <Divider backgroundColorValue={'rgba(237,241,242,0.3)'}/>
                 <ImageBackground style={styles.menuButton}>
 
-
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=>navigation.navigate('SettingScreen')}>
                         <View style={styles.menuBottomItem}>
                             <Icon2 name={'ios-settings-outline'}  size={22} color={'#999999'}/>
                             <Text style={styles.menuBottomItemText}>设置</Text>
@@ -205,7 +207,8 @@ const styles = StyleSheet.create({
     cityItemTemp:{
         flexDirection: 'row',
         padding: 15,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        alignItems:'center'
     },
     normalText: {
         fontSize: 15,

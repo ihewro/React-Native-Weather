@@ -10,6 +10,7 @@ import AppStyle from '../styles/index';
 import weatherStore from '../storage/weather_store'
 import {observer} from 'mobx-react/native'
 import dateUtil from '../util/dateUtil'
+import Config from "../config/index_config";
 
 /**
  * 当获取到了当日24小时天气的时候需要进行刷新视图
@@ -44,13 +45,14 @@ export default class WeatherCurrent extends Component{
         )
     };
     _renderItem = ({item}) =>{
+        let iconUrl = Config.iconApi + Object(item.cond).code + '.png';
         return (
             <View style={styles.futureItem}>
                 <View style={styles.textContainer}>
                     <Text style={styles.date}>{dateUtil.getHoursAndMinsByDate(item.date)}</Text>
                 </View>
                 <View style={styles.textContainer}>
-                    <Icon name='wb-sunny' color={'#ffe603'} size={35}/>
+                    <Image style={AppStyle.weatherIcon} source={{uri: iconUrl}}/>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.temperature}>{item.tmp}°</Text>

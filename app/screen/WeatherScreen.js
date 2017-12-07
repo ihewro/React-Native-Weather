@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,TouchableOpacity,ImageBackground,StatusBar,ScrollView,RefreshControl,NativeModules} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableNativeFeedback,StatusBar,ScrollView,RefreshControl,NativeModules} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Divider from '../component/divider'
 import DrawerLayout from 'react-native-drawer-layout';
@@ -90,9 +90,9 @@ export class WeatherScreen extends Component {
                     <View style={styles.headerTop}>
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>
-                            <TouchableOpacity onPress={this._openControlPanel}>
+                            <TouchableNativeFeedback onPress={this._openControlPanel}>
                                 <Icon name='menu' color={'white'} size={20} style={{backgroundColor:'transparent'}}></Icon>
-                            </TouchableOpacity>
+                            </TouchableNativeFeedback>
                             <View style={styles.cityContainer}>
                                 <Text style={styles.title}>{weatherData === null ? '未知' : weatherData.basic.city}</Text>
                             </View>
