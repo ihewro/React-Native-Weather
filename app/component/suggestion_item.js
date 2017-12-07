@@ -5,7 +5,7 @@
 import React,{Component} from 'react'
 import {StyleSheet, View, Text, Image, StatusBar, ScrollView, RefreshControl, DrawerLayoutAndroid,ImageBackground} from 'react-native';
 import Divider from "./divider";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {observer} from 'mobx-react/native'
 import weatherStore from "../storage/weather_store";
 
@@ -35,7 +35,7 @@ export default class SuggestionItem extends Component{
         let index = this.props.index;
         return (
             <View style={styles.container}>
-                <Icon name={'pill'} size={40} color={'#ffffff'} />
+                <Icon name={suggestionItemIcon[index]} size={40} color={'#ffffff'} />
                 <View style={styles.contentContainer}>
                     <Text style={styles.text}>{lifeList[index].type}:{lifeList[index].brf}</Text>
                     <Text style={[styles.text, styles.textBottom]}>{lifeList[index].txt}</Text>
@@ -49,7 +49,7 @@ export default class SuggestionItem extends Component{
 
         return (
             <View style={styles.container}>
-                <Icon name={'pill'} size={40} color={'#ffffff'} />
+                <Icon name={'ios-ionitron-outline'} size={40} color={'#ffffff'} />
                 <View style={styles.contentContainer}>
                     <Text style={styles.text}>感冒指数:易发</Text>
                     <Text style={[styles.text, styles.textBottom]}>感冒容易发生，少去人群密集的场所有利于降低感冒的几率。</Text>
@@ -88,4 +88,7 @@ const styles = StyleSheet.create({
         fontSize:13
     },
 });
+
+const suggestionItemIcon = ['ios-ionitron-outline','ios-car-outline','ios-body-outline','ios-body-outline','ios-bicycle-outline','ios-boat-outline','ios-partly-sunny-outline'];
+
 

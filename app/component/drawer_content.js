@@ -12,6 +12,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons'
 import AppStyle from '../styles/index'
 import Swipeout from 'react-native-swipeout'
 import Divider from '../component/divider'
+import Picker from 'react-native-picker';
 
 
 @observer
@@ -105,7 +106,25 @@ export default class Menu extends Component {
     }
 
     _onPressAddCity = () =>{
+        let data = [];
+        for(var i=0;i<100;i++){
+            data.push(i);
+        }
 
+        Picker.init({
+            pickerData: data,
+            selectedValue: [59],
+            onPickerConfirm: data => {
+                console.log(data);
+            },
+            onPickerCancel: data => {
+                console.log(data);
+            },
+            onPickerSelect: data => {
+                console.log(data);
+            }
+        });
+        Picker.show();
     }
 
 }
