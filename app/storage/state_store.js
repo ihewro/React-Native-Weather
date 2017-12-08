@@ -134,6 +134,7 @@ class StateStore {
         return this.ds.cloneWithRows(this.cityList.slice());
     }
 
+
 }
 
 const stateStore = new StateStore();

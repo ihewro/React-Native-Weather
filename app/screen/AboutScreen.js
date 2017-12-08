@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, StatusBar, ScrollView, TouchableNativeFeedback,Image,Alert} from 'react-native'
+import {Text, View, StyleSheet, StatusBar, ScrollView, TouchableNativeFeedback,Image,Alert,Linking} from 'react-native'
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import Divider from '../component/divider'
@@ -55,7 +55,7 @@ export class AboutScreen extends Component{
                         <Image style={styles.aboutHeaderImage} source={require('../assets/logo.png')}/>
                         <Text style={styles.aboutHeaderText}>简天气（Simple Weather）</Text>
                     </View>
-                    <TouchableNativeFeedback >
+                    <TouchableNativeFeedback onPress={()=>{Linking.openURL('market://details?id=com.reactnativeweather').catch(err => console.error('An error occurred', err));}}>
                         <View style={[styles.itemContainer,{marginTop: 50}]}>
                             <Text style={styles.text}>给个好评</Text>
                             <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}
@@ -71,7 +71,7 @@ export class AboutScreen extends Component{
                         </View>
                     </TouchableNativeFeedback>
                     <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
-                    <TouchableNativeFeedback >
+                    <TouchableNativeFeedback onPress={()=>{Linking.openURL('https://github.com/ihewro/React-Native-Weather').catch(err => console.error('An error occurred', err));}}>
                         <View style={[styles.itemContainer]}>
                             <Text style={styles.text}>Github 代码</Text>
                             <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}

@@ -33,9 +33,15 @@ export default class SuggestionItem extends Component{
         let lifeList = weatherStore.lifeList;
         console.log("生活指数" + JSON.stringify(lifeList));
         let index = this.props.index;
+        let marginLeftValue = 0;
+        if (index === 4 ){
+            marginLeftValue = 10;
+        }
         return (
-            <View style={styles.container}>
-                <Icon name={suggestionItemIcon[index]} size={40} color={'#ffffff'} />
+            <View style={[styles.container]}>
+                <View style={styles.itemIcon}>
+                    <Icon name={suggestionItemIcon[index]} size={40} color={'#ffffff'} />
+                </View>
                 <View style={styles.contentContainer}>
                     <Text style={styles.text}>{lifeList[index].type}:{lifeList[index].brf}</Text>
                     <Text style={[styles.text, styles.textBottom]}>{lifeList[index].txt}</Text>
@@ -49,7 +55,9 @@ export default class SuggestionItem extends Component{
 
         return (
             <View style={styles.container}>
-                <Icon name={'ios-ionitron-outline'} size={40} color={'#ffffff'} />
+                <View style={styles.itemIcon}>
+                    <Icon name={'ios-ionitron-outline'} size={40} color={'#ffffff'} />
+                </View>
                 <View style={styles.contentContainer}>
                     <Text style={styles.text}>感冒指数:易发</Text>
                     <Text style={[styles.text, styles.textBottom]}>感冒容易发生，少去人群密集的场所有利于降低感冒的几率。</Text>
@@ -87,8 +95,13 @@ const styles = StyleSheet.create({
         color:'rgb(230,230,230)',
         fontSize:13
     },
+    itemIcon:{
+        height: 45,
+        width: 45,
+        justifyContent:'flex-start'
+    }
 });
 
-const suggestionItemIcon = ['ios-ionitron-outline','ios-car-outline','ios-body-outline','ios-body-outline','ios-bicycle-outline','ios-boat-outline','ios-partly-sunny-outline'];
+const suggestionItemIcon = ['ios-ionitron-outline','ios-car-outline','ios-body-outline','ios-thermometer-outline','ios-bicycle-outline','ios-boat-outline','ios-partly-sunny-outline'];
 
 

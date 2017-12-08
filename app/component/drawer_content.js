@@ -4,7 +4,7 @@
 
 
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback, FlatList,ImageBackground,ListView} from 'react-native';
+import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback, FlatList,ImageBackground,ListView,BackHandler} from 'react-native';
 import {observer} from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import Icon2 from 'react-native-vector-icons/Ionicons'
@@ -128,7 +128,7 @@ export default class Menu extends Component {
 
                     <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
 
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress ={() => {BackHandler.exitApp()}} >
                         <View style={styles.menuBottomItem}>
                             <Icon2 name={'ios-exit-outline'}  size={22} color={'#999999'}/>
                             <Text style={styles.menuBottomItemText}>退出</Text>
