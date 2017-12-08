@@ -106,9 +106,7 @@ export default class Menu extends Component {
         return this._renderCityList(stateStore.cityList);
     }
 
-    _renderMenuTop = () => {
 
-    };
 
     _renderCityList = (dataSource) => {
         let navigation = this.props.navigation;
@@ -120,7 +118,7 @@ export default class Menu extends Component {
                     source={require('../assets/menu_bg.jpg')}
                 />
                 <Divider backgroundColorValue={'rgba(237,241,242,0.3)'}/>
-                {(__ANDORID__)?this._renderMenuBottomAndroid():this._renderAddCityButtonIOS()}
+                {(__ANDORID__)?this._renderAddCityButtonAndroid():this._renderAddCityButtonIOS()}
                 <Divider backgroundColorValue={'rgba(237,241,242,0.6)'}/>
 
                 <ListView

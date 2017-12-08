@@ -90,7 +90,7 @@ export class WeatherScreen extends Component {
         let weatherData=weatherStore.getCurrentCityWeather();
         let backgroundImageValue = require('../assets/bg_0.jpg');
         let hours = new Date().getHours();
-        if (hours>18 && hours <6){
+        if (hours > 18 || hours < 6){
             backgroundImageValue = require('../assets/bg_1.png');
         }
         return (
