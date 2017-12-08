@@ -36,7 +36,7 @@ export default class AirCondition extends Component {
         } else {
             return airColors[5];
         }
-    }
+    };
 
     render(){
 

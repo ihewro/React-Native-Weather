@@ -1,5 +1,5 @@
 /*
- * 项目中的状态{state}控制与存储
+ * 对本地的存储的数据进行控制与存储
  *
  */
 import {observable, computed} from 'mobx';

@@ -201,9 +201,6 @@ class WeatherStore{
             return '[]';
         }
     }
-
-
-
 }
 
 const weatherStore = new WeatherStore();
