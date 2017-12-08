@@ -5,7 +5,6 @@
 import React,{Component} from 'react'
 import {StyleSheet, View, Text, Image,FlatList} from 'react-native';
 import Divider from '../component/divider'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import weatherStore from '../storage/weather_store'
 import dateUtil from '../util/dateUtil'
 import {observer} from 'mobx-react/native'

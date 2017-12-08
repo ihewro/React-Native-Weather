@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         fontSize:15
     },
     textBottom:{
-        color:'rgb(230,230,230)',
+        color:'rgba(255,255,255,0.8)',
         fontSize:13
     },
     itemIcon:{

@@ -5,7 +5,7 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, StatusBar, ScrollView, TouchableNativeFeedback,Image,Alert,Linking} from 'react-native'
 
-import Icon from 'react-native-vector-icons/SimpleLineIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import Divider from '../component/divider'
 
 export class AboutScreen extends Component{
@@ -58,7 +58,7 @@ export class AboutScreen extends Component{
                     <TouchableNativeFeedback onPress={()=>{Linking.openURL('market://details?id=com.reactnativeweather').catch(err => console.error('An error occurred', err));}}>
                         <View style={[styles.itemContainer,{marginTop: 50}]}>
                             <Text style={styles.text}>给个好评</Text>
-                            <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}
+                            <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
                                   style={{backgroundColor: 'transparent', marginRight: 20}}/>
                         </View>
                     </TouchableNativeFeedback>
@@ -66,7 +66,7 @@ export class AboutScreen extends Component{
                     <TouchableNativeFeedback onPress={this._onPressOpenSource}>
                         <View style={[styles.itemContainer]}>
                             <Text style={styles.text}>开源协议</Text>
-                            <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}
+                            <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
                                   style={{backgroundColor: 'transparent', marginRight: 20}}/>
                         </View>
                     </TouchableNativeFeedback>
@@ -74,7 +74,7 @@ export class AboutScreen extends Component{
                     <TouchableNativeFeedback onPress={()=>{Linking.openURL('https://github.com/ihewro/React-Native-Weather').catch(err => console.error('An error occurred', err));}}>
                         <View style={[styles.itemContainer]}>
                             <Text style={styles.text}>Github 代码</Text>
-                            <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}
+                            <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
                                   style={{backgroundColor: 'transparent', marginRight: 20}}/>
                         </View>
                     </TouchableNativeFeedback>

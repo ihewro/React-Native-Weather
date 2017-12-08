@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react'
 import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {observer} from 'mobx-react/native';
 import {StackNavigator,} from 'react-navigation';
 
@@ -18,7 +18,7 @@ export default class NavigationHeader extends Component {
                 <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                 <View style={styles.contentContainer}>
                     <TouchableOpacity onPress={()=>this.props.onPress()}>
-                        <Icon name='menu' color={'white'} size={20} style={{backgroundColor:'transparent'}}></Icon>
+                        <Icon name='md-menu' color={'white'} size={20} style={{backgroundColor:'transparent'}}></Icon>
                     </TouchableOpacity>
                     <View style={styles.cityContainer}>
                         <Text style={styles.title}>北京</Text>

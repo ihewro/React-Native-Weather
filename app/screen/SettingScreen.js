@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, StatusBar, ScrollView, Switch, TouchableNativeFeedback} from 'react-native'
-import Icon from 'react-native-vector-icons/SimpleLineIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import Divider from '../component/divider'
 import storage from '../config/storage_config'
 export class SettingScreen extends Component{
@@ -43,7 +43,7 @@ export class SettingScreen extends Component{
                         <TouchableNativeFeedback onPress={this._cleanStorage}>
                             <View style={[styles.itemContainer,{marginTop:20}]}>
                                 <Text style={styles.text}>清除缓存</Text>
-                                <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}
+                                <Icon name='ios-arrow-forward' color={'rgb(54,57,66)'} size={15}
     style={{backgroundColor: 'transparent', marginRight: 20}}/>
                             </View>
                         </TouchableNativeFeedback>

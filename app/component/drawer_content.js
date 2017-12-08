@@ -6,8 +6,7 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback, FlatList,ImageBackground,ListView,BackHandler} from 'react-native';
 import {observer} from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/SimpleLineIcons'
-import Icon2 from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import AppStyle from '../styles/index'
 import Swipeout from 'react-native-swipeout'
@@ -56,7 +55,7 @@ export default class Menu extends Component {
                 }}>
                     <View style={styles.cityItem}>
                         <View style={styles.cityItemName}>
-                            <Icon name={'location-pin'} size={0}/>
+                            <Icon name={'ios-compass-outline'} size={0}/>
                             <Text>{item.cityName}</Text>
                         </View>
                         <View style={styles.cityItemTemp}>
@@ -97,7 +96,7 @@ export default class Menu extends Component {
                     background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={styles.addCityView}>
                         <Text style={styles.addCityText}>添加城市</Text>
-                        <Icon2 name={'ios-add-outline'} size={20} color={'#f6e4ab'}/>
+                        <Icon name={'ios-add-outline'} size={20} color={'#f6e4ab'}/>
                     </View>
                 </TouchableNativeFeedback>
                 <Divider backgroundColorValue={'rgba(237,241,242,0.6)'}/>
@@ -111,7 +110,7 @@ export default class Menu extends Component {
 
                     <TouchableNativeFeedback onPress={()=>navigation.navigate('SettingScreen')}>
                         <View style={styles.menuBottomItem}>
-                            <Icon2 name={'ios-settings-outline'}  size={22} color={'#999999'}/>
+                            <Icon name={'ios-settings-outline'}  size={22} color={'#999999'}/>
                             <Text style={styles.menuBottomItemText}>设置</Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -121,7 +120,7 @@ export default class Menu extends Component {
 
                     <TouchableNativeFeedback onPress={()=>navigation.navigate('AboutScreen')}>
                         <View style={styles.menuBottomItem}>
-                            <Icon2 name={'ios-heart'}  size={22} color={'#999999'}/>
+                            <Icon name={'ios-heart'}  size={22} color={'#999999'}/>
                             <Text style={styles.menuBottomItemText}>关于</Text>
                         </View>
                     </TouchableNativeFeedback>
@@ -130,7 +129,7 @@ export default class Menu extends Component {
 
                     <TouchableNativeFeedback onPress ={() => {BackHandler.exitApp()}} >
                         <View style={styles.menuBottomItem}>
-                            <Icon2 name={'ios-exit-outline'}  size={22} color={'#999999'}/>
+                            <Icon name={'ios-exit-outline'}  size={22} color={'#999999'}/>
                             <Text style={styles.menuBottomItemText}>退出</Text>
                         </View>
                     </TouchableNativeFeedback>

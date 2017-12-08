@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import {StyleSheet,Text,View,Image,TouchableNativeFeedback,StatusBar,ScrollView,RefreshControl,NativeModules} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/Ionicons'
 import Divider from '../component/divider'
 import DrawerLayout from 'react-native-drawer-layout';
 import NavigationHeader from '../component/header_navigation'
@@ -98,7 +98,7 @@ export class WeatherScreen extends Component {
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>
                             <TouchableNativeFeedback onPress={this._openControlPanel}>
-                                <Icon name='menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
+                                <Icon name='md-menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
                             </TouchableNativeFeedback>
                             <View style={styles.cityContainer}>
                                 <Text style={styles.title}>{weatherData === null ? '未知' : weatherData.basic.city}</Text>

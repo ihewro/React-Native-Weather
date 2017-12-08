@@ -3,9 +3,8 @@
  */
 
 import React,{Component} from 'react'
-import {StyleSheet, View, Text, Image,FlatList,ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, Image,FlatList} from 'react-native';
 import Divider from '../component/divider'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import AppStyle from '../styles/index';
 import weatherStore from '../storage/weather_store'
 import {observer} from 'mobx-react/native'
