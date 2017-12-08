@@ -55,7 +55,7 @@ export class WeatherScreen extends Component {
     }
 
     componentWillMount(){
-        console.log("weatherScreen组件开始执行componentWillMount函数………………");
+        //console.log("weatherScreen组件开始执行componentWillMount函数………………");
         this._refreshWeatherData();
         stateStore.loadLocalCityData();
     }

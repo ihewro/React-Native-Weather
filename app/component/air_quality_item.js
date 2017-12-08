@@ -29,7 +29,7 @@ export default class AirQualityItem extends Component{
 
     _renderContent = (aqiList) => {
         let index = this.props.index;
-        console.log("空气指数的值为" + JSON.stringify(aqiList[index]));
+        //console.log("空气指数的值为" + JSON.stringify(aqiList[index]));
         return (
             <View style={styles.container}>
                 <View style={styles.columnItem}>

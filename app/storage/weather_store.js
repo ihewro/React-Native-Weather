@@ -39,7 +39,7 @@ class WeatherStore{
      * @param name
      */
     requestWeatherByName(name){
-        console.log("开启网络请求天气数据");
+        //console.log("开启网络请求天气数据");
         this.loading = true;
         return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=" + name)
             .then((response) => {//数据解析方式
@@ -55,10 +55,10 @@ class WeatherStore{
                 this.saveWeatherData(jsonData);
                 //加载完成
                 this.loading = false;
-                console.log("获取天气成功，结束当前网络请求天气数据");
+                //console.log("获取天气成功，结束当前网络请求天气数据");
             })
             .catch((error) => {//错误信息处理
-                console.log("获取天气数据失败，结束当前网络请求天气数据" + error);
+                //console.log("获取天气数据失败，结束当前网络请求天气数据" + error);
             })
             .done();
     };
@@ -138,10 +138,10 @@ class WeatherStore{
 
         if (flag !== -1) {
             stateStore.cityList[flag] = weatherItem;
-            console.log("当前天气已经存在天气列表中只需要修改天气数据即可");
+            //console.log("当前天气已经存在天气列表中只需要修改天气数据即可");
         } else {
             stateStore.cityList.push(weatherItem);
-            console.log("当前已经存储的天气列表中没有改天气名称时候才会存储")
+            //console.log("当前已经存储的天气列表中没有改天气名称时候才会存储")
         }
         //把当前的cityList 存储到localStorage
         stateStore.saveLocalCityData();
@@ -153,7 +153,7 @@ class WeatherStore{
      */
     getCurrentCityWeather() {
         let weatherData = this.getWeatherDataByName(this.currentCityName);
-        console.log("当前的城市名称：" + this.currentCityName);
+        //console.log("当前的城市名称：" + this.currentCityName);
         return weatherData;
     }
 
@@ -164,7 +164,7 @@ class WeatherStore{
      */
     getWeatherDataByName(name) {
         if (!this.weatherMap.has(name)) {
-            console.log("weatherMap中不存在该地区的天气数据表示当前天气的数据并没有加载成功");
+            //console.log("weatherMap中不存在该地区的天气数据表示当前天气的数据并没有加载成功");
             return null;
         } else {
             return this.weatherMap.get(name);
@@ -194,7 +194,7 @@ class WeatherStore{
 
             let hourlyData = data.hourly;
 
-            console.log("获取到了当日24小时的天气" +JSON.stringify(hourlyData));
+            //console.log("获取到了当日24小时的天气" +JSON.stringify(hourlyData));
             return hourlyData;
         } else {
             return '[]';

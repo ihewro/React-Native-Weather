@@ -30,7 +30,7 @@ export default class Menu extends Component {
     //flatList的每一项的渲染
     _renderCityItem = (item) =>{
 
-        console.log("当前城市的数据（侧边栏）" + JSON.stringify(item));
+        //console.log("当前城市的数据（侧边栏）" + JSON.stringify(item));
         // Buttons
         var swipeOutBtn = [
             {
@@ -84,7 +84,7 @@ export default class Menu extends Component {
 
     _renderCityList = (dataSource) => {
         let navigation = this.props.navigation;
-        console.log("本地的城市列表数组大小" + dataSource.length );
+        //console.log("本地的城市列表数组大小" + dataSource.length );
         return (
             <View style={styles.drawerContainer}>
                 <Image
@@ -159,13 +159,13 @@ export default class Menu extends Component {
                 //去掉最后一个字，比如县，比如区，以便能够查询天气
                 let cityName = selectedValue[2].substring(0,selectedValue[2].length - 1);
                 weatherStore.requestWeatherByName(cityName);
-                console.log(cityName);
+                //console.log(cityName);
             },
             onPickerCancel: data => {
-                console.log(data);
+                //console.log(data);
             },
             onPickerSelect: data => {
-                console.log(data);
+                //console.log(data);
             }
         });
         Picker.show();

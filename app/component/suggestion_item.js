@@ -31,7 +31,7 @@ export default class SuggestionItem extends Component{
 
     _renderContent = () => {
         let lifeList = weatherStore.lifeList;
-        console.log("生活指数" + JSON.stringify(lifeList));
+        //console.log("生活指数" + JSON.stringify(lifeList));
         let index = this.props.index;
         let marginLeftValue = 0;
         if (index === 4 ){

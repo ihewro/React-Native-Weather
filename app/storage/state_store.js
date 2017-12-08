@@ -46,20 +46,20 @@ class StateStore {
      * [{"cityName":"北京","tmp":"-5~6°C","iconUrl":"https://cdn.heweather.com/cond_icon/101.png"}]
      */
     saveLocalCityData() {
-        console.log("本地的CityList" + this.cityList.length);
-        console.log("开始存储本地数据……");
+        //console.log("本地的CityList" + this.cityList.length);
+        //console.log("开始存储本地数据……");
         storage.save({
             key: 'cities',
             data: JSON.stringify(this.cityList)
         });
-        console.log("结束存储本地数据……");
+        //console.log("结束存储本地数据……");
     };
 
     /**
      * 加载本地添加的天气列表数据
      */
     loadLocalCityData() {
-        console.log("开启加载本地存储的数据…………………………");
+        //console.log("开启加载本地存储的数据…………………………");
         storage.load({
             key: 'cities',
             // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的sync方法
@@ -75,7 +75,7 @@ class StateStore {
             // 而不能在then以外处理
             // 也没有办法“变成”同步返回
             // 你也可以使用“看似”同步的async/await语法
-            console.log("本地存储的数据：" + ret);
+            //console.log("本地存储的数据：" + ret);
             let array = JSON.parse(ret);
             for (let i = 0; i < array.length; i++) {
                 let flag = true;//是否可以添加到城市列表中
@@ -90,9 +90,9 @@ class StateStore {
                 }
             }
             this.cityList = this.removeDuplicatedItem(this.cityList);
-            console.log("城市列表" + this.cityList);
+            //console.log("城市列表" + this.cityList);
         }).catch(err => {
-            console.log("如果没有找到数据且没有sync方法");
+            //console.log("如果没有找到数据且没有sync方法");
             //如果没有找到数据且没有sync方法，
             //或者有其他异常，则在catch中返回
             console.warn(err.message);
@@ -107,7 +107,7 @@ class StateStore {
                     break;
             }
         });
-        console.log("本地存储的天气信息加载完成…………………………");
+        //console.log("本地存储的天气信息加载完成…………………………");
     }
 
     /**

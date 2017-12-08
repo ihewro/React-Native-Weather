@@ -70,7 +70,7 @@ function getMonthAndDayByDate(date) {
  */
 function getHoursAndMinsByDate(date) {
 
-    console.log("长度为" + String(date).length);
+    //console.log("长度为" + String(date).length);
     return String(date).substring(10,String(date).length);
 }
 
