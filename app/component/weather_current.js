@@ -50,13 +50,29 @@ export default class WeatherCurrent extends Component{
         return (
             <View style={styles.futureItem}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.date}>00：00</Text>
+                    <Text style={styles.date}>{dateUtil.getHoursAndMinsByDate(item.date)}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Image style={AppStyle.weatherIcon} source={{uri: iconUrl}}/>
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.temperature}>{item.tmp}0°</Text>
+                    <Text style={styles.temperature}>{item.tmp}°</Text>
+                </View>
+            </View>
+        );
+    };
+
+    _renderLoadingItem = () => {
+        return (
+            <View style={styles.futureItem}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.date}>00:00</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Image style={AppStyle.weatherIcon} source={require('../assets/na.png')}/>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.temperature}>0°</Text>
                 </View>
             </View>
         );
@@ -72,7 +88,7 @@ export default class WeatherCurrent extends Component{
                     showsHorizontalScrollIndicator={false}
                     data={[{key: 'a'}, {key: 'b'},{key: 'c'}, {key: 'd'},{key: 'e'}, {key: 'f'},{key: 'i'}, {key: 'h'},{key: 'm'}, {key: 'n'}]}
                     extraData={this.state}
-                    renderItem={this._renderItem}
+                    renderItem={this._renderLoadingItem}
                     horizontal = {true}
                     style={styles.currentWeatherFlatList}
                 />

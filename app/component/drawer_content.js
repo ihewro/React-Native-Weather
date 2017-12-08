@@ -119,7 +119,7 @@ export default class Menu extends Component {
 
                     <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
 
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=>navigation.navigate('AboutScreen')}>
                         <View style={styles.menuBottomItem}>
                             <Icon2 name={'ios-heart'}  size={22} color={'#999999'}/>
                             <Text style={styles.menuBottomItemText}>关于</Text>

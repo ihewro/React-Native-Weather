@@ -22,7 +22,6 @@ export default class Divider extends Component{
         let marginLeftValue = this.props.marginLeftValue;
         let marginRightValue = this.props.marginRightValuel;
         let marginTopValue = this.props.marginTopValue;
-        let heightValue =  this.props.heightValue;
 
         if (dividerHeight == null){
             dividerHeight = 1;
@@ -39,11 +38,8 @@ export default class Divider extends Component{
         if (marginTopValue == null){
             marginTopValue = 0;
         }
-        if (heightValue == null){
-            heightValue = 1;
-        }
         return (
-            <View style={{height:dividerHeight,backgroundColor: backgroundColorValue,marginLeft: marginLeftValue,marginRight: marginRightValue, marginTop: marginTopValue,height: heightValue}}>
+            <View style={{height:dividerHeight,backgroundColor: backgroundColorValue,marginLeft: marginLeftValue,marginRight: marginRightValue, marginTop: marginTopValue}}>
             </View>
         )
     }

@@ -5,9 +5,9 @@
  */
 
 import { StackNavigator } from 'react-navigation';
-
 import {WeatherScreen} from './app/screen/WeatherScreen'
 import {SettingScreen} from "./app/screen/SettingScreen";
+import {AboutScreen} from "./app/screen/AboutScreen";
 
 const RootNavigator = StackNavigator({
     WeatherScreen: {
@@ -15,6 +15,9 @@ const RootNavigator = StackNavigator({
     },
     SettingScreen: {
         screen: SettingScreen
+    },
+    AboutScreen: {
+        screen: AboutScreen
     }
 });
 

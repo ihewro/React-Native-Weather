@@ -86,7 +86,7 @@ export class WeatherScreen extends Component {
                 drawerPosition={DrawerLayout.positions.Left}
                 renderNavigationView={()=><Menu callback={this._closeControlPanel} navigation={navigation} />}>
                 <View style={styles.transparentBackground}>
-                    <Image style={styles.bgImage} source={require('../assets/bg_2.png')}/>
+                    <Image style={styles.bgImage} source={require('../assets/bg_7.jpg')}/>
                     <View style={styles.headerTop}>
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>

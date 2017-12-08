@@ -13,7 +13,7 @@ export class SettingScreen extends Component{
         title: '设置',
         headerStyle: {
             backgroundColor: 'black',
-            marginTop: 20
+            marginTop: 20,
         },
         headerTintColor: 'white'
     };
@@ -52,17 +52,10 @@ export class SettingScreen extends Component{
                             </View>
                         </TouchableNativeFeedback>
 
+
                         <Divider dividerHeight={1}/>
                         <TouchableNativeFeedback >
                             <View style={[styles.itemContainer,{marginTop:40}]}>
-                                <Text style={styles.text}>开源协议</Text>
-                                <Icon name='arrow-right' color={'rgb(54,57,66)'} size={15}
-        style={{backgroundColor: 'transparent', marginRight: 20}}/>
-                            </View>
-                        </TouchableNativeFeedback>
-                        <Divider dividerHeight={1}/>
-                        <TouchableNativeFeedback >
-                            <View style={styles.itemContainer}>
                                 <Text style={styles.text}>当前版本</Text>
                                 <Text style={[styles.text,{marginRight:20}]}>V1.0.0</Text>
                             </View>
