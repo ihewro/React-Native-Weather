@@ -8,6 +8,9 @@ import {observer} from 'mobx-react/native'
 
 import AppStyle from '../styles/index';
 import weatherStore from '../storage/weather_store'
+import {Dimensions} from "react-native";
+
+const {width, height} = Dimensions.get('window');
 
 @observer
 export default class WeatherHeader extends Component{
@@ -61,12 +64,15 @@ const styles = StyleSheet.create({
 
 
     number: {
-        fontSize:60,
+        fontSize:80,
         color: '#ffffff'
     },
     contentContainer: {
-        flex: 1,
-        flexDirection: 'row',
+        flex: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 100,
+        marginBottom:100
     },
     details:{
         flex: 1,

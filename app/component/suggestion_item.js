@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'transparent',
         alignItems: 'center',
-        marginTop:25
+        marginTop:25,
+        marginLeft: 15
     },
     contentContainer:{
         flex: 1,
@@ -78,7 +79,6 @@ const styles = StyleSheet.create({
     text: {
         flex: 1,
         marginLeft: 20,
-        marginRight: 20,
         marginTop: 5,
         color:'white',
         fontSize:15

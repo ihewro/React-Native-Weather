@@ -86,7 +86,7 @@ export class WeatherScreen extends Component {
                 drawerPosition={DrawerLayout.positions.Left}
                 renderNavigationView={()=><Menu callback={this._closeControlPanel} navigation={navigation} />}>
                 <View style={styles.transparentBackground}>
-                    <Image style={styles.bgImage} source={require('../assets/bg.png')}/>
+                    <Image style={styles.bgImage} source={require('../assets/bg_2.png')}/>
                     <View style={styles.headerTop}>
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     },
     container: {
         position: 'absolute',//相对父元素进行绝对定位
-        top: 200,
+        top: 80,
         bottom:0
     },
     contentContainer:{

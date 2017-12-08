@@ -19,7 +19,8 @@ import Config from "../config/index_config";
 export default class WeatherCurrent extends Component{
     render () {
         //console.disableYellowBox = true;
-        if (weatherStore.loading){
+        let hourlyDataSource = weatherStore.hourlyDataSource;
+        if (weatherStore.loading || hourlyDataSource === null || hourlyDataSource.length === 0){
             return this._renderLoadingView();
         }else {
             console.log("当前天气的分小时数据：" +JSON.stringify(weatherStore.hourlyDataSource));
@@ -49,13 +50,13 @@ export default class WeatherCurrent extends Component{
         return (
             <View style={styles.futureItem}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.date}>{dateUtil.getHoursAndMinsByDate(item.date)}</Text>
+                    <Text style={styles.date}>00：00</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Image style={AppStyle.weatherIcon} source={{uri: iconUrl}}/>
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.temperature}>{item.tmp}°</Text>
+                    <Text style={styles.temperature}>{item.tmp}0°</Text>
                 </View>
             </View>
         );
