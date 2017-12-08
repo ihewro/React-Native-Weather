@@ -3,7 +3,7 @@
 [![download](https://www.pgyer.com/app/qrcode/simpleWeather)
 ](https://www.pgyer.com/simpleWeather)
 
-### 编译
+## 编译
 
 1. Prepare your environment: Requirements and Android Setup
 2. Clone this repo, and goto the project root directory
@@ -12,7 +12,7 @@
 Enjoy`
 
 
-### 使用到的开源项目
+## 使用到的开源项目
 
 * react-china-location: https://github.com/JasonBoy/react-china-location ：提供了全国省市的json数据
 * mobx-react: https://github.com/mobxjs/mobx-react  ：状态的管理者，提供的数据与界面之间的交流
