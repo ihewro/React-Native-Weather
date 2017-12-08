@@ -31,7 +31,7 @@ export default class WeatherCurrent extends Component{
     _renderContent = (dataSource) => {
         return(
             <View >
-                <Text style={AppStyle.smallNumber}>10分钟前更新</Text>
+                <Text style={AppStyle.smallNumber}>{weatherStore.refreshTime} 时更新</Text>
                 <Divider/>
                 <FlatList
                     keyExtractor={this._keyExtractor}
@@ -81,7 +81,7 @@ export default class WeatherCurrent extends Component{
     _renderLoadingView = () => {
         return (
             <View >
-                <Text style={AppStyle.smallNumber}>10分钟前更新</Text>
+                <Text style={AppStyle.smallNumber}>正在更新……</Text>
                 <Divider/>
                 <FlatList
                     keyExtractor={this._keyExtractor}

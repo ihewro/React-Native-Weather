@@ -20,6 +20,7 @@ import WeatherFooter from '../component/weather_footer'
 import weatherStore from '../storage/weather_store'
 import stateStore from '../storage/state_store'
 import {observer} from 'mobx-react/native'
+import dateUtil from "../util/dateUtil";
 
 
 /**
@@ -72,6 +73,7 @@ export class WeatherScreen extends Component {
 
 
     _refreshWeatherData = () => {
+        weatherStore.refreshTime = dateUtil.getCurrentTime();
         weatherStore.requestWeatherByName(weatherStore.currentCityName);
     };
 
@@ -79,6 +81,11 @@ export class WeatherScreen extends Component {
     render() {
         let navigation = this.props.navigation;
         let weatherData=weatherStore.getCurrentCityWeather();
+        let backgroundImageValue = require('../assets/bg_0.jpg');
+        let hours = new Date().getHours();
+        if (hours>18 && hours <6){
+            backgroundImageValue = require('../assets/bg_1.png');
+        }
         return (
             <DrawerLayout
                 drawerWidth={330}
@@ -86,12 +93,12 @@ export class WeatherScreen extends Component {
                 drawerPosition={DrawerLayout.positions.Left}
                 renderNavigationView={()=><Menu callback={this._closeControlPanel} navigation={navigation} />}>
                 <View style={styles.transparentBackground}>
-                    <Image style={styles.bgImage} source={require('../assets/bg_7.jpg')}/>
+                    <Image style={styles.bgImage} source={backgroundImageValue}/>
                     <View style={styles.headerTop}>
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>
                             <TouchableNativeFeedback onPress={this._openControlPanel}>
-                                <Icon name='menu' color={'white'} size={20} style={{backgroundColor:'transparent'}}></Icon>
+                                <Icon name='menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
                             </TouchableNativeFeedback>
                             <View style={styles.cityContainer}>
                                 <Text style={styles.title}>{weatherData === null ? '未知' : weatherData.basic.city}</Text>

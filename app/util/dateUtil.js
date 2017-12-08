@@ -5,14 +5,14 @@
  * @returns {*}
  */
 function getWeekdayByDate(date) {
-    let a = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
+    let a = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
     let day = new Date(date).getDay();
-    var today = getNowFormatDate();
-    var tomorrow = getTomorrowFormatDate();
+    let today = getNowFormatDate();
+    let tomorrow = getTomorrowFormatDate();
     if (today === date)
         return '今天';
     else if (date === tomorrow)
-        return '明天'
+        return '明天';
     else
         return a[day];
 }
@@ -22,17 +22,17 @@ function getWeekdayByDate(date) {
  * @returns {string}
  */
 function getNowFormatDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
+    let date = new Date();
+    let seperator1 = "-";
+    let month = date.getMonth() + 1;
+    let strDate = date.getDate();
     if (month >= 1 && month <= 9) {
         month = "0" + month;
     }
     if (strDate >= 0 && strDate <= 9) {
         strDate = "0" + strDate;
     }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+    let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
     return currentdate;
 }
 
@@ -41,18 +41,18 @@ function getNowFormatDate() {
  * @returns {string}
  */
 function getTomorrowFormatDate() {
-    var date = new Date();
+    let date = new Date();
     date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
-    var seperator1 = "-";
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
+    let seperator1 = "-";
+    let month = date.getMonth() + 1;
+    let strDate = date.getDate();
     if (month >= 1 && month <= 9) {
         month = "0" + month;
     }
     if (strDate >= 0 && strDate <= 9) {
         strDate = "0" + strDate;
     }
-    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+    let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
     return currentdate;
 }
 
@@ -74,9 +74,25 @@ function getHoursAndMinsByDate(date) {
     return String(date).substring(10,String(date).length);
 }
 
+/**
+ * 获取当前刷新时刻的时间
+ * @returns {string}
+ */
+function getCurrentTime() {
+    let myDate = new Date();//获取系统当前时间
+    let minutes = myDate.getMinutes();
+    if (minutes<=9 && minutes >=0){
+        minutes = "0" + minutes;
+    }
+    return myDate.getHours() + ":" + minutes;
+}
+
+
+
 
 module.exports = {
     getWeekdayByDate: getWeekdayByDate,
     getMonthAndDayByDate: getMonthAndDayByDate,
-    getHoursAndMinsByDate:getHoursAndMinsByDate
-}
+    getHoursAndMinsByDate:getHoursAndMinsByDate,
+    getCurrentTime:getCurrentTime,
+};

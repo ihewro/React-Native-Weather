@@ -17,6 +17,7 @@ class WeatherStore{
     @observable aqiList = [];//空气指数/质量
     @observable lifeList = [];//生活指数/建议
     @observable loading = true;//指示数据是否正在加载
+    @observable refreshTime = '19:00';//刷新时刻的时间
 
 
     /**
