@@ -11,8 +11,9 @@ const ApplicationStyles = {
         width: 30,
         height: 30,
         tintColor: "#ffffff"
-    }
-}
+    },
+
+};
 
 export default ApplicationStyles
 

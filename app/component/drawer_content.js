@@ -4,7 +4,7 @@
 
 
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback, FlatList,ImageBackground,ListView,BackHandler} from 'react-native';
+import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback,TouchableHighlight, FlatList,ImageBackground,ListView,BackHandler} from 'react-native';
 import {observer} from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -40,31 +40,60 @@ export default class Menu extends Component {
                 }
             }
         ];
-        let callback = this.props.callback;
-        let iconUrl = item.iconUrl;
+
 
         return(
             <Swipeout left={swipeOutBtn}
                       backgroundColor={'#ffffff'}
                       autoClose={true}
             >
-                <TouchableNativeFeedback
+                {(__ANDORID__) ? this._renderAndroidTouchable(item) : this._renderIOSTouchable(item)}
+            </Swipeout>
+        )
+    };
+
+    _renderAndroidTouchable = (item) => {
+        let callback = this.props.callback;
+        let iconUrl = item.iconUrl;
+        return(
+            <TouchableNativeFeedback
                 onPress={()=>{
                     weatherStore.changeCurrentCityName(item.cityName);
                     callback();
                 }}>
-                    <View style={styles.cityItem}>
-                        <View style={styles.cityItemName}>
-                            <Icon name={'ios-compass-outline'} size={0}/>
-                            <Text>{item.cityName}</Text>
-                        </View>
-                        <View style={styles.cityItemTemp}>
-                            <Text>{item.tmp}</Text>
-                            <Image style={{tintColor:'#F8E6B5',width: 25,height: 25,marginLeft:5,alignItems:'center',marginBottom:3}} source={{uri: iconUrl}}/>
-                        </View>
+                <View style={styles.cityItem}>
+                    <View style={styles.cityItemName}>
+                        <Text>{item.cityName}</Text>
                     </View>
-                </TouchableNativeFeedback>
-            </Swipeout>
+                    <View style={styles.cityItemTemp}>
+                        <Text>{item.tmp}</Text>
+                        <Image style={{tintColor:'#F8E6B5',width: 25,height: 25,marginLeft:5,alignItems:'center',marginBottom:3}} source={{uri: iconUrl}}/>
+                    </View>
+                </View>
+            </TouchableNativeFeedback>
+        )
+    };
+
+    _renderIOSTouchable = (item) => {
+        let callback = this.props.callback;
+        let iconUrl = item.iconUrl;
+        return(
+            <TouchableHighlight
+                onPress={()=>{
+                    weatherStore.changeCurrentCityName(item.cityName);
+                    callback();
+                }}
+                underlayColor={pressButtonColor}>
+                <View style={styles.cityItem}>
+                    <View style={styles.cityItemName}>
+                        <Text>{item.cityName}</Text>
+                    </View>
+                    <View style={styles.cityItemTemp}>
+                        <Text>{item.tmp}</Text>
+                        <Image style={{tintColor:'#F8E6B5',width: 25,height: 25,marginLeft:5,alignItems:'center',marginBottom:3}} source={{uri: iconUrl}}/>
+                    </View>
+                </View>
+            </TouchableHighlight>
         )
     };
 
@@ -91,14 +120,7 @@ export default class Menu extends Component {
                     source={require('../assets/menu_bg.jpg')}
                 />
                 <Divider backgroundColorValue={'rgba(237,241,242,0.3)'}/>
-                <TouchableNativeFeedback
-                    onPress={this._onPressAddCity}
-                    background={TouchableNativeFeedback.SelectableBackground()}>
-                    <View style={styles.addCityView}>
-                        <Text style={styles.addCityText}>添加城市</Text>
-                        <Icon name={'ios-add-outline'} size={20} color={'#f6e4ab'}/>
-                    </View>
-                </TouchableNativeFeedback>
+                {(__ANDORID__)?this._renderMenuBottomAndroid():this._renderAddCityButtonIOS()}
                 <Divider backgroundColorValue={'rgba(237,241,242,0.6)'}/>
 
                 <ListView
@@ -106,48 +128,109 @@ export default class Menu extends Component {
                     renderRow={this._renderCityItem}>
                 </ListView>
                 <Divider backgroundColorValue={'rgba(237,241,242,0.3)'}/>
-                <ImageBackground style={styles.menuButton}>
 
-                    <TouchableNativeFeedback onPress={()=>navigation.navigate('SettingScreen')}>
-                        <View style={styles.menuBottomItem}>
-                            <Icon name={'ios-settings-outline'}  size={22} color={'#999999'}/>
-                            <Text style={styles.menuBottomItemText}>设置</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-
-
-                    <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
-
-                    <TouchableNativeFeedback onPress={()=>navigation.navigate('AboutScreen')}>
-                        <View style={styles.menuBottomItem}>
-                            <Icon name={'ios-heart'}  size={22} color={'#999999'}/>
-                            <Text style={styles.menuBottomItemText}>关于</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-
-                    <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
-
-                    <TouchableNativeFeedback onPress ={() => {BackHandler.exitApp()}} >
-                        <View style={styles.menuBottomItem}>
-                            <Icon name={'ios-exit-outline'}  size={22} color={'#999999'}/>
-                            <Text style={styles.menuBottomItemText}>退出</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-
-                </ImageBackground>
-
-
+                {(__ANDORID__)? (this._renderMenuBottomAndroid(navigation)):(this._renderMenuBottomIOS(navigation))}
             </View>
         )
     };
 
-    _renderMenuBottom = () => {
+    _renderAddCityButtonAndroid = () => {
+        return (
+            <TouchableNativeFeedback
+                onPress={this._onPressAddCity}>
+                <View style={styles.addCityView}>
+                    <Text style={styles.addCityText}>添加城市</Text>
+                    <Icon name={'ios-add-outline'} size={20} color={'#f6e4ab'}/>
+                </View>
+            </TouchableNativeFeedback>
+        );
+    };
 
-    }
+    _renderAddCityButtonIOS = () => {
+        return (
+            <TouchableHighlight
+                onPress={this._onPressAddCity}
+                underlayColor={pressButtonColor}>
+                <View style={styles.addCityView}>
+                    <Text style={styles.addCityText}>添加城市</Text>
+                    <Icon name={'ios-add-outline'} size={20} color={'#f6e4ab'}/>
+                </View>
+            </TouchableHighlight>
+        );
+    };
+
+    _renderMenuBottomAndroid = (navigation) => {
+        return (
+            <ImageBackground style={styles.menuButton}>
+                <TouchableNativeFeedback onPress={()=>navigation.navigate('SettingScreen')}>
+                    <View style={styles.menuBottomItem}>
+                        <Icon name={'ios-settings-outline'}  size={22} color={'#999999'}/>
+                        <Text style={styles.menuBottomItemText}>设置</Text>
+                    </View>
+                </TouchableNativeFeedback>
+                <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
+                <TouchableNativeFeedback onPress={()=>navigation.navigate('AboutScreen')}>
+                    <View style={styles.menuBottomItem}>
+                        <Icon name={'ios-heart'}  size={22} color={'#999999'}/>
+                        <Text style={styles.menuBottomItemText}>关于</Text>
+                    </View>
+                </TouchableNativeFeedback>
+
+                <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
+
+                <TouchableNativeFeedback onPress ={() => {BackHandler.exitApp()}} >
+                    <View style={styles.menuBottomItem}>
+                        <Icon name={'ios-exit-outline'}  size={22} color={'#999999'}/>
+                        <Text style={styles.menuBottomItemText}>退出</Text>
+                    </View>
+                </TouchableNativeFeedback>
+
+            </ImageBackground>
+        )
+    };
+
+    _renderMenuBottomIOS = (navigation) => {
+        return(
+            <ImageBackground style={styles.menuButton}>
+
+                <TouchableHighlight
+                    underlayColor={pressButtonColor}
+                    onPress={()=>navigation.navigate('SettingScreen')}>
+                    <View style={styles.menuBottomItem}>
+                        <Icon name={'ios-settings-outline'}  size={22} color={'#999999'}/>
+                        <Text style={styles.menuBottomItemText}>设置</Text>
+                    </View>
+                </TouchableHighlight>
+
+
+                <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
+
+                <TouchableHighlight
+                    underlayColor={pressButtonColor}
+                    onPress={()=>navigation.navigate('AboutScreen')}>
+                    <View style={styles.menuBottomItem}>
+                        <Icon name={'ios-heart'}  size={22} color={'#999999'}/>
+                        <Text style={styles.menuBottomItemText}>关于</Text>
+                    </View>
+                </TouchableHighlight>
+
+                <View style={{width:1,height:50,backgroundColor:'rgba(237,241,242,0.5)'}}/>
+
+                <TouchableHighlight
+                    underlayColor={pressButtonColor}
+                    onPress ={() => {BackHandler.exitApp()}} >
+                    <View style={styles.menuBottomItem}>
+                        <Icon name={'ios-exit-outline'}  size={22} color={'#999999'}/>
+                        <Text style={styles.menuBottomItemText}>退出</Text>
+                    </View>
+                </TouchableHighlight>
+
+            </ImageBackground>
+        )
+    };
+
 
     _onPressAddCity = () =>{
-
-
         Picker.init({
             pickerTitleText: '选择城市',
             pickerCancelBtnText:'取消',

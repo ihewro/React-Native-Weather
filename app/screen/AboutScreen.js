@@ -3,17 +3,17 @@
  */
 
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, StatusBar, ScrollView, TouchableNativeFeedback,Image,Alert,Linking} from 'react-native'
+import {Text, View, StyleSheet, StatusBar, ScrollView, TouchableNativeFeedback,TouchableHighlight,Image,Alert,Linking,Platform} from 'react-native'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import Divider from '../component/divider'
 
-export class AboutScreen extends Component{
+export class AboutScreen extends Component {
     static navigationOptions = {
         title: '关于',
         headerStyle: {
             backgroundColor: '#4db6ac',
-            marginTop: 20,
+            marginTop: (__ANDORID__) ? 20 : 0,
             elevation: 0
         },
         headerTintColor: 'white'
@@ -25,7 +25,8 @@ export class AboutScreen extends Component{
         // 初始状态
         this.state = {};
     }
-    _onPressOpenSource = () =>{
+
+    _onPressOpenSource = () => {
         Alert.alert(
             '开源协议',
             '1. react-china-location: https://github.com/JasonBoy/react-china-location\n' +
@@ -39,7 +40,7 @@ export class AboutScreen extends Component{
             [
                 {text: '确定'},
             ],
-            { cancelable: false }
+            {cancelable: false}
         )
     };
 
@@ -50,38 +51,97 @@ export class AboutScreen extends Component{
                     backgroundColor="#00897b"
                     barStyle="light-content"
                 />
-                <ScrollView>
-                    <View style={styles.aboutHeader}>
-                        <Image style={styles.aboutHeaderImage} source={require('../assets/logo.png')}/>
-                        <Text style={styles.aboutHeaderText}>简天气（Simple Weather）</Text>
-                    </View>
-                    <TouchableNativeFeedback onPress={()=>{Linking.openURL('market://details?id=com.reactnativeweather').catch(err => console.error('An error occurred', err));}}>
-                        <View style={[styles.itemContainer,{marginTop: 50}]}>
-                            <Text style={styles.text}>给个好评</Text>
-                            <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
-                                  style={{backgroundColor: 'transparent', marginRight: 20}}/>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
-                    <TouchableNativeFeedback onPress={this._onPressOpenSource}>
-                        <View style={[styles.itemContainer]}>
-                            <Text style={styles.text}>开源协议</Text>
-                            <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
-                                  style={{backgroundColor: 'transparent', marginRight: 20}}/>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
-                    <TouchableNativeFeedback onPress={()=>{Linking.openURL('https://github.com/ihewro/React-Native-Weather').catch(err => console.error('An error occurred', err));}}>
-                        <View style={[styles.itemContainer]}>
-                            <Text style={styles.text}>Github 代码</Text>
-                            <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
-                                  style={{backgroundColor: 'transparent', marginRight: 20}}/>
-                        </View>
-                    </TouchableNativeFeedback>
-                </ScrollView>
+
+                {(__ANDORID__) ? this._renderAndroidColumn() : this._renderIOSColumn()}
+
             </View>
         )
     }
+
+    _renderIOSColumn = () => {
+        return (
+            <ScrollView>
+                <View style={styles.aboutHeader}>
+                    <Image style={styles.aboutHeaderImage} source={require('../assets/logo.png')}/>
+                    <Text style={styles.aboutHeaderText}>简天气（Simple Weather）</Text>
+                </View>
+                <TouchableHighlight
+                    underlayColor={pressButtonColor}
+                    onPress={() => {
+                    Linking.openURL('market://details?id=com.reactnativeweather').catch(err => console.error('An error occurred', err));
+                }}>
+                    <View style={[styles.itemContainer, {marginTop: 50}]}>
+                        <Text style={styles.text}>给个好评</Text>
+                        <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
+                              style={{backgroundColor: 'transparent', marginRight: 20}}/>
+                    </View>
+                </TouchableHighlight>
+                <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
+                <TouchableHighlight
+                    underlayColor={pressButtonColor}
+                    onPress={this._onPressOpenSource}>
+                    <View style={[styles.itemContainer]}>
+                        <Text style={styles.text}>开源协议</Text>
+                        <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
+                              style={{backgroundColor: 'transparent', marginRight: 20}}/>
+                    </View>
+                </TouchableHighlight>
+                <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
+                <TouchableHighlight
+                    underlayColor={pressButtonColor}
+                    onPress={() => {
+                    Linking.openURL('https://github.com/ihewro/React-Native-Weather').catch(err => console.error('An error occurred', err));
+                }}>
+                    <View style={[styles.itemContainer]}>
+                        <Text style={styles.text}>Github 代码</Text>
+                        <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
+                              style={{backgroundColor: 'transparent', marginRight: 20}}/>
+                    </View>
+                </TouchableHighlight>
+            </ScrollView>
+        )
+    };
+
+    _renderAndroidColumn = () => {
+        return (
+            <ScrollView>
+                <View style={styles.aboutHeader}>
+                    <Image style={styles.aboutHeaderImage} source={require('../assets/logo.png')}/>
+                    <Text style={styles.aboutHeaderText}>简天气（Simple Weather）</Text>
+                </View>
+                <TouchableNativeFeedback onPress={() => {
+                    Linking.openURL('market://details?id=com.reactnativeweather').catch(err => console.error('An error occurred', err));
+                }}>
+                    <View style={[styles.itemContainer, {marginTop: 50}]}>
+                        <Text style={styles.text}>给个好评</Text>
+                        <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
+                              style={{backgroundColor: 'transparent', marginRight: 20}}/>
+                    </View>
+                </TouchableNativeFeedback>
+                <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
+                <TouchableNativeFeedback onPress={this._onPressOpenSource}>
+                    <View style={[styles.itemContainer]}>
+                        <Text style={styles.text}>开源协议</Text>
+                        <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
+                              style={{backgroundColor: 'transparent', marginRight: 20}}/>
+                    </View>
+                </TouchableNativeFeedback>
+                <Divider dividerHeight={1} marginLeftValue={20} marginRightValuel={20}/>
+                <TouchableNativeFeedback onPress={() => {
+                    Linking.openURL('https://github.com/ihewro/React-Native-Weather').catch(err => console.error('An error occurred', err));
+                }}>
+                    <View style={[styles.itemContainer]}>
+                        <Text style={styles.text}>Github 代码</Text>
+                        <Icon name='ios-arrow-forward-outline' color={'rgb(54,57,66)'} size={15}
+                              style={{backgroundColor: 'transparent', marginRight: 20}}/>
+                    </View>
+                </TouchableNativeFeedback>
+            </ScrollView>
+        )
+            ;
+
+    };
+
 }
 
 const styles = StyleSheet.create({

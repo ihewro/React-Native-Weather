@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,TouchableNativeFeedback,StatusBar,ScrollView,RefreshControl,NativeModules} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableNativeFeedback,StatusBar,ScrollView,RefreshControl,NativeModules,TouchableHighlight,Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Divider from '../component/divider'
 import DrawerLayout from 'react-native-drawer-layout';
@@ -22,6 +22,13 @@ import stateStore from '../storage/state_store'
 import {observer} from 'mobx-react/native'
 import dateUtil from "../util/dateUtil";
 
+if (Platform.OS === 'ios'){
+    global.__ANDORID__= false;
+}else{
+    global.__ANDORID__= true;
+}
+
+global.pressButtonColor = '#eeeeee';
 
 /**
  * 被观察者，主要是当是否加载的属性变化的时候，刷新视图要相应的变化
@@ -97,9 +104,11 @@ export class WeatherScreen extends Component {
                     <View style={styles.headerTop}>
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>
-                            <TouchableNativeFeedback onPress={this._openControlPanel}>
+                            <TouchableHighlight
+                                underlayColor={pressButtonColor}
+                                onPress={this._openControlPanel}>
                                 <Icon name='md-menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
-                            </TouchableNativeFeedback>
+                            </TouchableHighlight>
                             <View style={styles.cityContainer}>
                                 <Text style={styles.title}>{weatherData === null ? '未知' : weatherData.basic.city}</Text>
                             </View>
