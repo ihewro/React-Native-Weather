@@ -12,7 +12,6 @@ class StateStore {
      * 被观察者：当被观察者的状态改变，观察者的状态也会随之改变。
      * @type {boolean}
      */
-    @observable currentCityEngName = '';//当前城市的名称
     @observable cityList = [];//本地已经添加的城市列表
 
     ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -89,7 +88,7 @@ class StateStore {
                     this.cityList.push(array[i]);
                 }
             }
-            this.cityList = this.removeDuplicatedItem(this.cityList);
+            //this.cityList = this.removeDuplicatedItem(this.cityList);
             //console.log("城市列表" + this.cityList);
         }).catch(err => {
             //console.log("如果没有找到数据且没有sync方法");
@@ -114,7 +113,7 @@ class StateStore {
      * ?
      * @param ar
      * @returns {Array}
-     */
+
     removeDuplicatedItem(ar) {
         var ret = [];
 
@@ -126,6 +125,7 @@ class StateStore {
 
         return ret;
     }
+     */
 
     /**
      * 返回本地的cityList

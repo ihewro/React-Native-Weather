@@ -156,7 +156,7 @@ class WeatherStore{
      * 存储一个城市的天气数据
      * @param weatherData
      */
-    saveCityItem(weatherData) {
+    saveCityItem = (weatherData) => {
         let flag = -1;
         for (let i = 0; i < stateStore.cityList.length; i++) {
             if (stateStore.cityList[i].cityName === weatherData.basic.city) {

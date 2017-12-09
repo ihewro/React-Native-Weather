@@ -173,12 +173,12 @@ export class SettingScreen extends Component{
     _versionCompare =  (currVer, promoteVer) => {
         currVer = currVer || "0.0.0";
         promoteVer = promoteVer || "0.0.0";
-        if (currVer == promoteVer) return false;
-        var currVerArr = currVer.split(".");
-        var promoteVerArr = promoteVer.split(".");
-        var len = Math.max(currVerArr.length, promoteVerArr.length);
-        for (var i = 0; i < len; i++) {
-            var proVal = ~~promoteVerArr[i],
+        if (currVer === promoteVer) return false;
+        let currVerArr = currVer.split(".");
+        let promoteVerArr = promoteVer.split(".");
+        let len = Math.max(currVerArr.length, promoteVerArr.length);
+        for (let i = 0; i < len; i++) {
+            let proVal = ~~promoteVerArr[i],
                 curVal = ~~currVerArr[i];
             if (proVal < curVal) {
                 return false;

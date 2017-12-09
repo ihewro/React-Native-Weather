@@ -34,19 +34,6 @@ global.__CURRENT_VERSION__ = '1.0.1';
 export class WeatherScreen extends Component {
     //导航栏的属性
     static navigationOptions = {
-        title: '北京',
-        /*headerStyle: {
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            height: 50,
-            top: 20,
-            left: 20,
-            right: 0,
-        },
-        headerTintColor: '#fff',
-        headerMode: 'none',
-        headerTitleStyle: {fontWeight: 'normal'},*/
-
         header: null
     };
 
