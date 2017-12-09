@@ -32,7 +32,18 @@ export class SettingScreen extends Component{
     _cleanStorage = () => {
         storage.clearMap();
         stateStore.cityList = [];
-        alert("清除成功");
+        Snackbar.show({
+            title: '清除缓存成功',
+            duration: Snackbar.LENGTH_SHORT,
+            action: {
+                title: '知道了',
+                color: 'green',
+                onPress: () => {
+                    //前往github下载最新版本
+
+                },
+            },
+        });
     };
 
 
@@ -107,14 +118,13 @@ export class SettingScreen extends Component{
                 duration: Snackbar.LENGTH_INDEFINITE,
             });
         }
-        fetch('https://api.github.com/repos/ihewro/React-Native-Weather/releases/latest')
+        fetch('https://api.github.com/repos/ihewro/React-Native-Weather/releases/latest',{timeout:3000})
             .then((response) => {//数据解析方式
                 if (response.ok){
                     return response.json();
                 }
             })
             .then((responseJson) => {//处理数据
-
                 if (this._versionCompare(__CURRENT_VERSION__,responseJson.tag_name)){
                     weatherStore.checkingUpdate = false;
                     Snackbar.show({
@@ -156,7 +166,7 @@ export class SettingScreen extends Component{
                         onPress: () => { /* Do something. */ },
                     },
                 });
-                console.error(error);
+                //console.error(error);
             });
     };
 

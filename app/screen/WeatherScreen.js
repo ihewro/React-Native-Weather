@@ -77,8 +77,30 @@ export class WeatherScreen extends Component {
 
 
     _refreshWeatherData = () => {
+        weatherStore.loading = true;
         weatherStore.refreshTime = dateUtil.getCurrentTime();
         weatherStore.requestWeatherByName(weatherStore.currentCityName);
+    };
+
+    _renderAndroidMenuButton = () => {
+      return (
+          <TouchableNativeFeedback
+              onPress={this._openControlPanel}>
+              <Icon name='md-menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
+          </TouchableNativeFeedback>
+      );
+    };
+
+
+    _renderIOSMenuButton = () => {
+        return(
+            <TouchableHighlight
+                underlayColor={pressButtonColor}
+                onPress={this._openControlPanel}>
+                <Icon name='md-menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
+            </TouchableHighlight>
+        );
+
     };
 
 
@@ -101,11 +123,7 @@ export class WeatherScreen extends Component {
                     <View style={styles.headerTop}>
                         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
                         <View style={styles.contentContainer}>
-                            <TouchableHighlight
-                                underlayColor={pressButtonColor}
-                                onPress={this._openControlPanel}>
-                                <Icon name='md-menu' color={'white'} size={20} style={{backgroundColor: 'transparent'}}/>
-                            </TouchableHighlight>
+                            {(__ANDORID__)?this._renderAndroidMenuButton():this._renderIOSMenuButton()}
                             <View style={styles.cityContainer}>
                                 <Text style={styles.title}>{weatherData === null ? '未知' : weatherData.basic.city}</Text>
                             </View>

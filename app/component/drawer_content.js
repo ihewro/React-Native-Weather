@@ -7,7 +7,6 @@ import React, {Component} from 'react'
 import {StyleSheet, View, Text, Image, StatusBar, ScrollView, TouchableNativeFeedback,TouchableHighlight, FlatList,ImageBackground,ListView,BackHandler} from 'react-native';
 import {observer} from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
 import AppStyle from '../styles/index'
 import Swipeout from 'react-native-swipeout'
 import Divider from '../component/divider'
@@ -15,6 +14,7 @@ import Picker from 'react-native-picker';
 import CITY from '../util/cityData'
 import stateStore from '../storage/state_store'
 import weatherStore from "../storage/weather_store";
+import Snackbar from 'react-native-snackbar';
 
 
 @observer
@@ -36,7 +36,15 @@ export default class Menu extends Component {
                 text: '删除',
                 onPress: () => {
                     stateStore.removeCityByName(item.cityName);
-                    alert("删除成功");
+                    Snackbar.show({
+                        title: '删除成功',
+                        duration: Snackbar.LENGTH_SHORT,
+                        action: {
+                            title: '知道了',
+                            color: 'green',
+                            onPress: () => { /* Do something. */ },
+                        },
+                    });
                 }
             }
         ];
@@ -228,6 +236,7 @@ export default class Menu extends Component {
     };
 
 
+
     _onPressAddCity = () =>{
         Picker.init({
             pickerTitleText: '选择城市',
@@ -237,6 +246,17 @@ export default class Menu extends Component {
             selectedValue: ['北京市','北京市',1],
             onPickerConfirm: (selectedValue) => {
                 //去掉最后一个字，比如县，比如区，以便能够查询天气
+                if (selectedValue[0] === '黑龙江省' || selectedValue[0] === '安徽省'){
+                    Snackbar.show({
+                        title: '这真是一个好城市呢！',
+                        duration: Snackbar.LENGTH_INDEFINITE,
+                        action: {
+                            title: '同意',
+                            color: 'green',
+                            onPress: () => { /* Do something. */ },
+                        },
+                    });
+                }
                 let cityName = selectedValue[2].substring(0,selectedValue[2].length - 1);
                 weatherStore.requestWeatherByName(cityName);
                 //console.log(cityName);

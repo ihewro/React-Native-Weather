@@ -45,7 +45,8 @@ class WeatherStore{
     requestWeatherByName(name){
         //console.log("开启网络请求天气数据");
         this.loading = true;
-        return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=" + name,{timeout:6000})
+
+        return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=" + name,{timeout: 3000})
             .then((response) => {//数据解析方式
                 if (response.ok){
                     return response.json();
@@ -65,16 +66,15 @@ class WeatherStore{
                 this.loading = false;
                 Snackbar.show({
                     title: '网络请求失败，请稍后再试',
-                    duration: Snackbar.LENGTH_INDEFINITE,
+                    duration: Snackbar.LENGTH_SHORT,
                     action: {
                         title: '知道了',
                         color: 'green',
                         onPress: () => { /* Do something. */ },
                     },
                 });
-                //console.log("获取天气数据失败，结束当前网络请求天气数据" + error);
+                console.log("获取天气数据失败，结束当前网络请求天气数据" + error);
             })
-            .done();
     };
 
     timeoutPromise(ms, promise) {

@@ -64,6 +64,7 @@ export class AboutScreen extends Component {
                 <View style={styles.aboutHeader}>
                     <Image style={styles.aboutHeaderImage} source={require('../assets/logo.png')}/>
                     <Text style={styles.aboutHeaderText}>简天气（Simple Weather）</Text>
+                    <Text style={styles.aboutHeaderSmallText}>当前版本 :{__CURRENT_VERSION__}</Text>
                 </View>
                 <TouchableHighlight
                     underlayColor={pressButtonColor}
@@ -177,4 +178,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontSize: 15
     },
+    aboutHeaderSmallText:{
+        marginTop: 30,
+        color: '#58666e'
+    }
 });
