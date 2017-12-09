@@ -10,6 +10,8 @@ import SuggestionInfo from '../model/suggestion_info'
 import AqiItem from "../model/aqi_item_info";
 import CityItemInfo from '../model/city_item'
 import ApiConfig from '../config/index_config'
+import Snackbar from 'react-native-snackbar';
+
 class WeatherStore{
 
     @observable weatherMap = observable.map();//observable提供了数据结构，存储天气名称——天气数据的集合。
@@ -18,6 +20,7 @@ class WeatherStore{
     @observable lifeList = [];//生活指数/建议
     @observable loading = true;//指示数据是否正在加载
     @observable refreshTime = '19:00';//刷新时刻的时间
+    @observable checkingUpdate = true;
 
 
     /**
@@ -42,7 +45,7 @@ class WeatherStore{
     requestWeatherByName(name){
         //console.log("开启网络请求天气数据");
         this.loading = true;
-        return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=" + name)
+        return fetch("https://free-api.heweather.com/v5/weather?key=19713447578c4afe8c12a351d46ea922&city=" + name,{timeout:6000})
             .then((response) => {//数据解析方式
                 if (response.ok){
                     return response.json();
@@ -59,10 +62,38 @@ class WeatherStore{
                 //console.log("获取天气成功，结束当前网络请求天气数据");
             })
             .catch((error) => {//错误信息处理
+                this.loading = false;
+                Snackbar.show({
+                    title: '网络请求失败，请稍后再试',
+                    duration: Snackbar.LENGTH_INDEFINITE,
+                    action: {
+                        title: '知道了',
+                        color: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
                 //console.log("获取天气数据失败，结束当前网络请求天气数据" + error);
             })
             .done();
     };
+
+    timeoutPromise(ms, promise) {
+        return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+                reject(new Error("promise timeout"))
+            }, ms);
+            promise.then(
+                (res) => {
+                    clearTimeout(timeoutId);
+                    resolve(res);
+                },
+                (err) => {
+                    clearTimeout(timeoutId);
+                    reject(err);
+                }
+            );
+        })
+    }
 
     /**
      * 对获取到的json数据进行处理
@@ -192,13 +223,11 @@ class WeatherStore{
     @computed get hourlyDataSource() {
         let data = this.getCurrentCityWeather();
         if (data !== null) {
-
             let hourlyData = data.hourly;
-
             //console.log("获取到了当日24小时的天气" +JSON.stringify(hourlyData));
             return hourlyData;
         } else {
-            return '[]';
+            return '';
         }
     }
 }

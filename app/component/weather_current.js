@@ -19,7 +19,7 @@ export default class WeatherCurrent extends Component{
     render () {
         //console.disableYellowBox = true;
         let hourlyDataSource = weatherStore.hourlyDataSource;
-        if (weatherStore.loading || hourlyDataSource === null || hourlyDataSource.length === 0){
+        if (hourlyDataSource === null || hourlyDataSource.length === 0){
             return this._renderLoadingView();
         }else {
             //console.log("当前天气的分小时数据：" +JSON.stringify(weatherStore.hourlyDataSource));

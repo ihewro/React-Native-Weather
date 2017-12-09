@@ -3,10 +3,14 @@
  */
 
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, StatusBar, ScrollView, Switch, TouchableNativeFeedback,TouchableHighlight,Platform} from 'react-native'
+import {Text, View, StyleSheet, StatusBar, ScrollView, Switch, TouchableNativeFeedback,TouchableHighlight,Platform,Alert} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Divider from '../component/divider'
 import storage from '../config/storage_config'
+import Snackbar from 'react-native-snackbar';
+import stateStore from "../storage/state_store";
+import weatherStore from "../storage/weather_store";
+
 export class SettingScreen extends Component{
     static navigationOptions = {
         title: '设置',
@@ -27,6 +31,7 @@ export class SettingScreen extends Component{
 
     _cleanStorage = () => {
         storage.clearMap();
+        stateStore.cityList = [];
         alert("清除成功");
     };
 
@@ -61,10 +66,11 @@ export class SettingScreen extends Component{
                 </TouchableHighlight>
                 <Divider dividerHeight={1}/>
                 <TouchableHighlight
+                    onPress={this._checkUpdate}
                     underlayColor={pressButtonColor}>
                     <View style={[styles.itemContainer,{marginTop:20}]}>
                         <Text style={styles.text}>当前版本</Text>
-                        <Text style={[styles.text,{marginRight:20}]}>V1.0.0</Text>
+                        <Text style={[styles.text,{marginRight:20}]}>V{__CURRENT_VERSION__}</Text>
                     </View>
                 </TouchableHighlight>
                 <Divider dividerHeight={1} backgroundColorValue={'rgba(237,241,242,0.3)'}/>
@@ -83,15 +89,94 @@ export class SettingScreen extends Component{
                     </View>
                 </TouchableNativeFeedback>
                 <Divider dividerHeight={1}/>
-                <TouchableNativeFeedback >
+                <TouchableNativeFeedback onPress={this._checkUpdate}>
                     <View style={[styles.itemContainer,{marginTop:20}]}>
                         <Text style={styles.text}>当前版本</Text>
-                        <Text style={[styles.text,{marginRight:20}]}>V1.0.0</Text>
+                        <Text style={[styles.text,{marginRight:20}]}>V{__CURRENT_VERSION__}</Text>
                     </View>
                 </TouchableNativeFeedback>
                 <Divider dividerHeight={1} backgroundColorValue={'rgba(237,241,242,0.3)'}/>
             </View>
         );
+    }
+
+    _checkUpdate = () => {
+        if (weatherStore.checkingUpdate){
+            Snackbar.show({
+                title: '正在检查更新……',
+                duration: Snackbar.LENGTH_INDEFINITE,
+            });
+        }
+        fetch('https://api.github.com/repos/ihewro/React-Native-Weather/releases/latest')
+            .then((response) => {//数据解析方式
+                if (response.ok){
+                    return response.json();
+                }
+            })
+            .then((responseJson) => {//处理数据
+
+                if (this._versionCompare(__CURRENT_VERSION__,responseJson.tag_name)){
+                    weatherStore.checkingUpdate = false;
+                    Snackbar.show({
+                        title: '最新版本为' + responseJson.tag_name,
+                        duration: Snackbar.LENGTH_INDEFINITE,
+                        action: {
+                            title: '前往更新',
+                            color: 'green',
+                            onPress: () => {
+                                //前往github下载最新版本
+
+                            },
+                        },
+                    });
+                }else {
+                    weatherStore.checkingUpdate = false;
+                    Snackbar.show({
+                        title: '当前是最新版本',
+                        duration: Snackbar.LENGTH_INDEFINITE,
+                        action: {
+                            title: '知道了',
+                            color: 'green',
+                            onPress: () => {
+                                //前往github下载最新版本
+                            },
+                        },
+                    });
+                }
+                //return responseJson.movies;
+            })
+            .catch((error) => {
+                weatherStore.checkingUpdate = false;
+                Snackbar.show({
+                    title: '检查更新失败，请稍后再试',
+                    duration: Snackbar.LENGTH_INDEFINITE,
+                    action: {
+                        title: '知道了',
+                        color: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
+                console.error(error);
+            });
+    };
+
+    _versionCompare =  (currVer, promoteVer) => {
+        currVer = currVer || "0.0.0";
+        promoteVer = promoteVer || "0.0.0";
+        if (currVer == promoteVer) return false;
+        var currVerArr = currVer.split(".");
+        var promoteVerArr = promoteVer.split(".");
+        var len = Math.max(currVerArr.length, promoteVerArr.length);
+        for (var i = 0; i < len; i++) {
+            var proVal = ~~promoteVerArr[i],
+                curVal = ~~currVerArr[i];
+            if (proVal < curVal) {
+                return false;
+            } else if (proVal > curVal) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

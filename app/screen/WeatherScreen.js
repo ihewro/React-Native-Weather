@@ -22,13 +22,10 @@ import stateStore from '../storage/state_store'
 import {observer} from 'mobx-react/native'
 import dateUtil from "../util/dateUtil";
 
-if (Platform.OS === 'ios'){
-    global.__ANDORID__= false;
-}else{
-    global.__ANDORID__= true;
-}
-
+global.__ANDORID__ = Platform.OS !== 'ios';
 global.pressButtonColor = '#eeeeee';
+global.__CURRENT_VERSION__ = '1.0.1';
+
 
 /**
  * 被观察者，主要是当是否加载的属性变化的时候，刷新视图要相应的变化
@@ -132,7 +129,6 @@ export class WeatherScreen extends Component {
                                 <LifeSuggestion/>
                                 <WeatherFooter/>
                             </View>
-
                         </ScrollView>
                     </View>
                 </View>
